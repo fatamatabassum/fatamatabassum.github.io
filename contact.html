@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Fatama’s Portfolio</title>
+
+  <style>
+    :root{
+      --text:#0b0b0f;
+      --muted:rgba(11,11,15,.65);
+      --line:rgba(11,11,15,.12);
+      --bg:#ffffff;
+      --radius:22px;
+      --max:1100px;
+      --pink:#ff4fa3;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      letter-spacing:-0.01em;
+    }
+
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(180%) blur(16px);
+      background:rgba(255,255,255,.75);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .brand{font-weight:650;color:var(--text);text-decoration:none}
+    .links a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      margin-left:14px;
+    }
+    .links a:hover{color:var(--pink)}
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:96px 18px}
+    h1{font-size:clamp(36px,5vw,56px);margin:0 0 12px}
+    p{font-size:18px;color:var(--muted);max-width:60ch}
+
+    .emailCard{
+      margin-top:36px;
+      padding:28px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:#fff;
+      max-width:520px;
+    }
+    .emailCard a{
+      color:var(--pink);
+      text-decoration:none;
+      font-weight:600;
+      font-size:18px;
+    }
+    .emailCard a:hover{text-decoration:underline}
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="index.html">Fatama</a>
+      <nav class="links">
+        <a href="work.html">Work</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Contact</h1>
+    <p>If you’d like to collaborate or have a project in mind, reach out via email.</p>
+
+    <div class="emailCard">
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=tabassum.fatama@gmail.com&su=Portfolio%20Inquiry"
+         target="_blank" rel="noopener">
+        tabassum.fatama@gmail.com
+      </a>
+    </div>
+  </main>
+</body>
+</html>
