@@ -61,6 +61,25 @@
       align-items:center;
       letter-spacing:-.02em;
     }
+    .homeIcon{
+  width:22px;
+  height:22px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:rgba(255,79,163,.16);
+  border:1px solid rgba(255,79,163,.28);
+  color:var(--pink);
+  font-size:14px;
+  line-height:1;
+  box-shadow:0 6px 16px rgba(255,79,163,.18);
+  transition:transform .18s ease, background .18s ease;
+}
+
+.brand:hover .homeIcon{
+  transform:translateY(-1px);
+  background:rgba(255,79,163,.22);
+}
     .brandDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--pink);
@@ -178,15 +197,16 @@
 
 <header>
   <div class="nav">
-    <div class="brand">
-      <span class="brandDot"></span>
-      <a href="index.html">Fatama</a>
-    </div>
+    <div class="brand"><a class="brand" href="index.html">
+  <span class="homeIcon" aria-hidden="true">⌂</span>
+  Fatama
+</a>
     <nav class="links">
       <a href="work.html">Work</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
+      
   </div>
 </header>
 
