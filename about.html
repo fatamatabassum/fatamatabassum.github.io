@@ -14,7 +14,6 @@
       --radius:22px;
       --max:1100px;
       --pink:#ff4fa3;
-      --shadowSoft:0 12px 30px rgba(255,79,163,.10);
       --border:rgba(255,79,163,.18);
     }
 
@@ -90,7 +89,7 @@
 
     /* LAYOUT */
     .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
-    .section{padding:72px 0}
+    .section{padding:76px 0 110px;} /* more vertical breathing room */
 
     .eyebrow{
       font-size:13px;
@@ -100,6 +99,7 @@
       display:flex;
       align-items:center;
       gap:8px;
+      margin-bottom:12px;
     }
     .eyebrow::after{
       content:"";
@@ -110,7 +110,7 @@
 
     h1{
       font-size:clamp(38px,6vw,64px);
-      margin:14px 0 18px;
+      margin:0 0 18px;
       letter-spacing:-.03em;
       line-height:1.05;
     }
@@ -129,18 +129,7 @@
       margin:0;
     }
 
-    /* typing line */
-    .typeLine{
-      display:inline-block;
-      white-space:nowrap;
-      overflow:hidden;
-      border-right:2px solid rgba(255,79,163,.55);
-      animation:typing 1.4s steps(28,end) .3s both, blink .8s step-end infinite;
-    }
-    @keyframes typing{ from{ width:0 } to{ width:100% } }
-    @keyframes blink{ 50%{ border-color:transparent } }
-
-    /* subtle gradient shimmer text */
+    /* shimmer text */
     .sparkleText{
       background: linear-gradient(90deg,
         rgba(255,79,163,.95),
@@ -161,7 +150,7 @@
       100%{ background-position: 0% 50%; }
     }
 
-    /* tiny twinkle sparkles */
+    /* sparkles around title */
     .sparkleWrap{ position:relative; isolation:isolate; }
     .sparkleWrap::after{
       content:"";
@@ -184,8 +173,53 @@
       50%{ transform: translateY(-3px); opacity:.70; }
     }
 
-    /* STATUS */
-    .statusRow{margin-top:26px}
+    /* typing line */
+    .typeLine{
+      display:inline-block;
+      white-space:nowrap;
+      overflow:hidden;
+      border-right:2px solid rgba(255,79,163,.55);
+      animation:typing 1.4s steps(28,end) .3s both, blink .8s step-end infinite;
+    }
+    @keyframes typing{ from{ width:0 } to{ width:100% } }
+    @keyframes blink{ 50%{ border-color:transparent } }
+
+    /* BIG SPACING between bubbles */
+    .stack{
+      display:flex;
+      flex-direction:column;
+      gap:34px; /* <-- this is the main spacing */
+      margin-top:22px;
+    }
+
+    /* bubble blocks */
+    .bubble{
+      padding:20px 20px;
+      border-radius:28px;
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(255,79,163,.12);
+      box-shadow:0 12px 28px rgba(255,79,163,.07);
+      position:relative;
+      transform: translateY(calc(var(--fy, 0px) + 18px)) scale(.94);
+      opacity:0;
+      transition: opacity .55s ease, transform .55s ease;
+      will-change: transform, opacity;
+    }
+
+    /* pop happens when it enters viewport */
+    .bubble.is-visible{
+      opacity:1;
+      animation: bubbleIn .78s cubic-bezier(.18, 1.35, .28, 1) both;
+      animation-delay: var(--d, 0ms);
+    }
+    @keyframes bubbleIn{
+      0%   { transform: translateY(calc(var(--fy, 0px) + 18px)) scale(.94); }
+      55%  { transform: translateY(calc(var(--fy, 0px) - 8px)) scale(1.05); }
+      78%  { transform: translateY(calc(var(--fy, 0px) + 2px)) scale(.995); }
+      100% { transform: translateY(calc(var(--fy, 0px) + 0px)) scale(1); }
+    }
+
+    /* status pill */
     .statusPill{
       display:inline-flex;
       align-items:center;
@@ -197,6 +231,7 @@
       box-shadow:0 12px 26px rgba(255,79,163,.10);
       font-size:14px;
       color:rgba(26,16,32,.80);
+      width:fit-content;
     }
     .pulseDot{
       width:10px;height:10px;border-radius:50%;
@@ -210,63 +245,11 @@
       100%{box-shadow:0 0 0 0 rgba(255,79,163,0)}
     }
 
-    /* REVEAL (base) */
-    .reveal{
-      opacity:0;
-      transform:translateY(16px);
-      transition:opacity .65s ease, transform .65s ease;
-      transition-delay: var(--d, 0ms);
-    }
-    .reveal.is-visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    /* page fade */
-    .pageFade{
-      opacity:0;
-      transform:translateY(10px);
-      animation:pageIn .9s ease forwards;
-    }
-    @keyframes pageIn{to{opacity:1;transform:translateY(0)}}
-
-    /* flowy scroll (subtle float) */
-    .flowy{
-      transform: translateY(calc(var(--fy, 0px) + 0px));
-      will-change: transform;
-    }
-
-    /* BUBBLE POP: ONLY for text bubbles */
-    .bubblePop{
-      transform:translateY(18px) scale(.94);
-      filter:saturate(1.02);
-    }
-    .bubblePop.is-visible{
-      animation: bubbleIn .75s cubic-bezier(.18, 1.35, .28, 1) both;
-    }
-    @keyframes bubbleIn{
-      0%   { transform:translateY(18px) scale(.94); }
-      55%  { transform:translateY(-6px) scale(1.04); }
-      78%  { transform:translateY(2px)  scale(.995); }
-      100% { transform:translateY(0)    scale(1); }
-    }
-
-    /* flowy sections */
-    .flowSection{
-      margin-top:22px;
-      padding:18px 18px;
-      border-radius:26px;
-      background:rgba(255,255,255,.55);
-      border:1px solid rgba(255,79,163,.12);
-      box-shadow:0 10px 22px rgba(255,79,163,.06);
-    }
-
-    /* grid cards */
+    /* cards */
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
       gap:14px;
-      margin-top:34px;
     }
     .card{
       background:rgba(255,255,255,.92);
@@ -286,7 +269,7 @@
 
     .footerNote{
       text-align:center;
-      margin-top:48px;
+      margin-top:70px;
       font-size:14px;
       color:var(--muted);
       opacity:.85;
@@ -294,14 +277,9 @@
 
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
-      .reveal,.pageFade,.typeLine,.sparkleText,.flowy,.bubblePop{
-        animation:none !important;
-        opacity:1 !important;
-        transform:none !important;
-        transition:none !important;
-        border-right:none;
-      }
-      .sparkleWrap::after{ animation:none !important; }
+      .sparkleText,.sparkleWrap::after,.typeLine{animation:none !important;border-right:none}
+      .bubble{opacity:1;transform:none !important;transition:none !important;animation:none !important;}
+      .pulseDot{animation:none !important;}
     }
   </style>
 </head>
@@ -322,61 +300,65 @@
   </div>
 </header>
 
-<div class="wrap section pageFade">
-  <div class="eyebrow reveal flowy" style="--d:0ms">About</div>
+<div class="wrap section">
+  <div class="eyebrow">About</div>
 
-  <h1 class="titleGlow sparkleWrap reveal flowy" style="--d:70ms">
+  <h1 class="titleGlow sparkleWrap">
     <span class="sparkleText">Hi, I’m Fatama ✿</span>
   </h1>
 
-  <div class="flowSection reveal bubblePop flowy" style="--d:120ms">
-    <p class="sub" style="margin:0;">
-      <span class="typeLine sparkleText">video editor ✿ audio editor, photographer, graphics designer .</span>
-    </p>
-  </div>
+  <div class="stack">
+    <div class="bubble" style="--d:0ms">
+      <p class="sub">
+        <span class="typeLine sparkleText">video editor ✿ audio editor, photographer, graphics designer .</span>
+      </p>
+    </div>
 
-  <div class="flowSection reveal bubblePop flowy" style="--d:170ms">
-    <p class="sub" style="margin:0;">
-      I’m a media studies student and visual creator with a strong focus on video based work.
-      I work across video editing, photography, audio, and graphic design, and I love creating
-      visuals and can bring your project to life.
-    </p>
-  </div>
+    <div class="bubble" style="--d:80ms">
+      <p class="sub">
+        I’m a media studies student and visual creator with a strong focus on video based work.
+        I work across video editing, photography, audio, and graphic design, and I love creating
+        visuals and can bring your project to life.
+      </p>
+    </div>
 
-  <div class="flowSection reveal bubblePop flowy" style="--d:220ms">
-    <p class="sub" style="margin:0;">
-      Most of my work lives in short form edits, reels, and photography.
-      I enjoy experimenting with different forms of media, editing, styles, and softwares.
-    </p>
-  </div>
+    <div class="bubble" style="--d:120ms">
+      <p class="sub">
+        Most of my work lives in short form edits, reels, and photography.
+        I enjoy experimenting with different forms of media, editing, styles, and softwares.
+      </p>
+    </div>
 
-  <div class="statusRow reveal flowy" style="--d:260ms">
-    <div class="statusPill">
-      <span class="pulseDot" aria-hidden="true"></span>
-      open to projects & collaborations !
+    <div class="bubble" style="--d:160ms">
+      <div class="statusPill">
+        <span class="pulseDot" aria-hidden="true"></span>
+        open to projects & collaborations !
+      </div>
+    </div>
+
+    <div class="bubble" style="--d:200ms">
+      <div class="grid">
+        <div class="card">
+          <strong>Video Editing</strong>
+          <p>Short-form edits, pacing, transitions, captions.</p>
+        </div>
+        <div class="card">
+          <strong>Photography</strong>
+          <p>Shooting and editing with attention to mood.</p>
+        </div>
+        <div class="card">
+          <strong>Motion & Design</strong>
+          <p>Animated titles and visual elements.</p>
+        </div>
+        <div class="card">
+          <strong>Audio</strong>
+          <p>Sound cleanup and basic mixing.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="grid reveal flowy" style="--d:300ms">
-    <div class="card">
-      <strong>Video Editing</strong>
-      <p>Short-form edits, pacing, transitions, captions.</p>
-    </div>
-    <div class="card">
-      <strong>Photography</strong>
-      <p>Shooting and editing with attention to mood.</p>
-    </div>
-    <div class="card">
-      <strong>Motion & Design</strong>
-      <p>Animated titles and visual elements.</p>
-    </div>
-    <div class="card">
-      <strong>Audio</strong>
-      <p>Sound cleanup and basic mixing.</p>
-    </div>
-  </div>
-
-  <div class="footerNote reveal flowy" style="--d:340ms">
+  <div class="footerNote">
     thanks for stopping by ♡
   </div>
 </div>
@@ -384,37 +366,33 @@
 <script>
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // reveal on scroll (adds is-visible)
   if(!reduce){
+    // pop bubbles when they enter view
+    const bubbles = document.querySelectorAll(".bubble");
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting) e.target.classList.add("is-visible");
       });
-    }, { threshold: 0.14 });
+    }, { threshold: 0.18 });
 
-    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
-  } else {
-    document.querySelectorAll(".reveal").forEach(el=>el.classList.add("is-visible"));
-  }
+    bubbles.forEach(b=>io.observe(b));
 
-  // flowy scroll (subtle float)
-  if(!reduce){
-    const flowEls = document.querySelectorAll(".flowy");
+    // scroll-linked float (makes it feel connected to scrolling)
     function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
-
     function onScrollFlow(){
       const vh = window.innerHeight;
-      flowEls.forEach(el=>{
+      bubbles.forEach(el=>{
         const r = el.getBoundingClientRect();
         const mid = r.top + r.height/2;
-        const t = (mid - vh/2) / vh;      // -1 to 1-ish
+        const t = (mid - vh/2) / vh;      // -1..1-ish
         const y = clamp(t * 10, -10, 10); // subtle float
         el.style.setProperty("--fy", y.toFixed(2) + "px");
       });
     }
-
     window.addEventListener("scroll", onScrollFlow, { passive:true });
     onScrollFlow();
+  } else {
+    document.querySelectorAll(".bubble").forEach(b=>b.classList.add("is-visible"));
   }
 </script>
 
