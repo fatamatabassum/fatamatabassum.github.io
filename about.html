@@ -16,10 +16,10 @@
       --pink:#ff4fa3;
       --border:rgba(255,79,163,.18);
 
-      /* motion tuning */
-      --gap:72px;           /* spacing between bubbles */
-      --blurPast:10px;      /* blur on already-viewed bubbles */
-      --dimPast:.62;        /* dim on already-viewed bubbles */
+      /* spacing + blur tuning */
+      --gap:84px;           /* more scroll space between bubbles */
+      --blurPast:10px;      /* blur amount for past bubbles */
+      --dimPast:.60;        /* dim amount for past bubbles */
     }
 
     *{box-sizing:border-box}
@@ -94,7 +94,7 @@
 
     /* LAYOUT */
     .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
-    .section{padding:88px 0 170px;}
+    .section{padding:92px 0 190px;}
 
     .eyebrow{
       font-size:13px;
@@ -194,13 +194,13 @@
       display:flex;
       flex-direction:column;
       gap:var(--gap);
-      margin-top:30px;
+      margin-top:34px;
     }
 
-    /* smoother Apple-like reveal (no harsh bounce) */
+    /* smoother Apple-like reveal */
     .reveal{
       opacity:0;
-      transform: translateY(26px) scale(.992);
+      transform: translateY(22px) scale(.994);
       filter: blur(10px);
       transition:
         opacity 850ms cubic-bezier(.22,1,.36,1),
@@ -217,71 +217,83 @@
     /* bubble base */
     .bubble{
       padding:24px 24px;
-      border-radius:30px;
-      background:rgba(255,255,255,.60);
+      border-radius:32px;
+      background:rgba(255,255,255,.62);
       border:1px solid rgba(255,79,163,.12);
       box-shadow:0 16px 42px rgba(255,79,163,.09);
-      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease;
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        background .22s ease,
+        border-color .22s ease,
+        opacity 600ms cubic-bezier(.22,1,.36,1),
+        filter 600ms cubic-bezier(.22,1,.36,1);
+      will-change: transform, filter, opacity;
     }
 
-    /* hover (cute but subtle) */
+    /* hover */
     .bubble:hover{
       transform: translateY(-6px);
-      box-shadow:0 22px 56px rgba(255,79,163,.14);
+      box-shadow:0 24px 60px rgba(255,79,163,.14);
       border-color: rgba(255,79,163,.18);
-      background:rgba(255,255,255,.70);
+      background:rgba(255,255,255,.72);
     }
 
-    /* blur/dim bubbles you've already passed */
-    .bubble.is-past{
-      filter: blur(var(--blurPast));
-      opacity: var(--dimPast);
-      transform: none;
-    }
-    .bubble.is-past:hover{
-      filter: blur(6px);
-      opacity: .78;
+    /* smooth blur/dim (no choppy toggles) */
+    .bubble{
+      --b: 0px;
+      --o: 1;
+      filter: blur(var(--b));
+      opacity: var(--o);
     }
 
-    /* flowy scroll offset (VERY subtle) */
+    /* flowy scroll */
     .flowy{
       transform: translateY(calc(var(--fy, 0px) + 0px));
       will-change: transform;
     }
-    /* prevent flowy from fighting hover */
     .bubble.flowy:hover{ transform: translateY(calc(var(--fy, 0px) - 6px)); }
 
-    /* LIQUID GLASS bubble (for "open to projects") */
+    /* LIQUID GLASS bubble */
     .glass{
       position:relative;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.34);
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.38);
       box-shadow:
-        0 18px 54px rgba(255,79,163,.18),
+        0 22px 70px rgba(255,79,163,.20),
         inset 0 1px 0 rgba(255,255,255,.55);
-      backdrop-filter: blur(18px) saturate(180%);
-      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      backdrop-filter: blur(22px) saturate(190%);
+      -webkit-backdrop-filter: blur(22px) saturate(190%);
       overflow:hidden;
     }
+    /* liquid sheen */
     .glass::before{
       content:"";
       position:absolute;
-      inset:-40% -30%;
+      inset:-60% -40%;
       background:
-        radial-gradient(500px 220px at 30% 30%, rgba(255,79,163,.22), rgba(255,79,163,0) 60%),
-        radial-gradient(420px 240px at 80% 55%, rgba(255,127,197,.18), rgba(255,127,197,0) 62%);
-      transform: rotate(-8deg);
+        radial-gradient(520px 260px at 30% 30%, rgba(255,79,163,.26), rgba(255,79,163,0) 62%),
+        radial-gradient(460px 280px at 78% 60%, rgba(255,127,197,.22), rgba(255,127,197,0) 64%),
+        radial-gradient(380px 220px at 55% 15%, rgba(255,255,255,.26), rgba(255,255,255,0) 60%);
+      transform: rotate(-10deg);
       pointer-events:none;
+      opacity:.95;
+      filter: blur(2px);
     }
+    /* subtle moving highlight */
     .glass::after{
       content:"";
       position:absolute;
       inset:-2px;
-      background:
-        linear-gradient(120deg, rgba(255,255,255,.55), rgba(255,255,255,0) 40%, rgba(255,255,255,.25));
-      opacity:.22;
+      background: linear-gradient(120deg, rgba(255,255,255,.65), rgba(255,255,255,0) 38%, rgba(255,255,255,.35));
+      opacity:.18;
       pointer-events:none;
-      mask: linear-gradient(#000, transparent 60%);
+      transform: translateX(-18%);
+      animation: sheen 5.4s ease-in-out infinite;
+    }
+    @keyframes sheen{
+      0%,100%{ transform: translateX(-18%); }
+      50%{ transform: translateX(18%); }
     }
 
     /* centered glass content */
@@ -290,28 +302,30 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      padding:32px 18px;
+      padding:42px 18px;
+      position:relative;
+      z-index:1;
     }
     .glassTitle{
-      font-weight:700;
+      font-weight:750;
       letter-spacing:-.01em;
       color:rgba(26,16,32,.88);
       font-size:15px;
-      padding:12px 16px;
+      padding:14px 18px;
       border-radius:999px;
-      background:rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.30);
-      backdrop-filter: blur(12px) saturate(150%);
-      -webkit-backdrop-filter: blur(12px) saturate(150%);
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.32);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
     }
 
-    /* glass hover */
     .glass:hover{
       transform: translateY(-6px);
       box-shadow:
-        0 26px 70px rgba(255,79,163,.22),
-        inset 0 1px 0 rgba(255,255,255,.58);
-      border-color: rgba(255,255,255,.45);
+        0 30px 86px rgba(255,79,163,.24),
+        inset 0 1px 0 rgba(255,255,255,.60);
+      border-color: rgba(255,255,255,.50);
     }
 
     /* cards */
@@ -338,7 +352,7 @@
 
     .footerNote{
       text-align:center;
-      margin-top:120px;
+      margin-top:140px;
       font-size:14px;
       color:var(--muted);
       opacity:.85;
@@ -348,7 +362,8 @@
       html{scroll-behavior:auto}
       .sparkleText,.sparkleWrap::after,.typeLine{animation:none !important;border-right:none}
       .reveal{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important;}
-      .bubble,.bubble:hover,.bubble.is-past,.glass{transform:none !important;filter:none !important;opacity:1 !important;}
+      .bubble,.bubble:hover,.glass{transform:none !important;filter:none !important;opacity:1 !important;}
+      .glass::after{animation:none !important;}
     }
   </style>
 </head>
@@ -377,13 +392,13 @@
   </h1>
 
   <div class="stack">
-    <div class="bubble reveal flowy">
+    <div class="bubble reveal flowy" data-bubble>
       <p class="sub">
         <span class="typeLine sparkleText">video editor ✿ audio editor, photographer, graphics designer .</span>
       </p>
     </div>
 
-    <div class="bubble reveal flowy">
+    <div class="bubble reveal flowy" data-bubble>
       <p class="sub">
         I’m a media studies student and visual creator with a strong focus on video based work.
         I work across video editing, photography, audio, and graphic design, and I love creating
@@ -391,21 +406,21 @@
       </p>
     </div>
 
-    <div class="bubble reveal flowy">
+    <div class="bubble reveal flowy" data-bubble>
       <p class="sub">
         Most of my work lives in short form edits, reels, and photography.
         I enjoy experimenting with different forms of media, editing, styles, and softwares.
       </p>
     </div>
 
-    <!-- centered liquid glass bubble -->
-    <div class="bubble reveal flowy glass">
+    <!-- liquid glass centered bubble -->
+    <div class="bubble reveal flowy glass" data-bubble data-glass>
       <div class="glassCenter">
         <div class="glassTitle">open to projects & collaborations !</div>
       </div>
     </div>
 
-    <div class="bubble reveal flowy">
+    <div class="bubble reveal flowy" data-bubble>
       <div class="grid">
         <div class="card">
           <strong>Video Editing</strong>
@@ -438,10 +453,10 @@
   function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
 
   if(!reduce){
-    const bubbles = Array.from(document.querySelectorAll(".bubble"));
+    const bubbles = Array.from(document.querySelectorAll("[data-bubble]"));
     const reveals = Array.from(document.querySelectorAll(".reveal"));
 
-    // Apple-ish reveal timing: triggers a bit later + smoother
+    // Apple-ish reveal: later trigger + smooth
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting) e.target.classList.add("is-visible");
@@ -450,30 +465,57 @@
 
     reveals.forEach(el=>io.observe(el));
 
-    // blur/dim bubbles you've already scrolled past
-    function markPast(){
-      const cutoff = window.innerHeight * 0.30; // when bubble top goes above this, it's "past"
+    // Smooth blur for past bubbles: NO class toggling (prevents choppy)
+    function updatePastBlur(){
+      const vh = window.innerHeight;
+      const start = vh * 0.30; // start blurring when bubble goes above this
+      const end   = vh * 0.05; // max blur when bubble is near very top
+
       bubbles.forEach(b=>{
         const r = b.getBoundingClientRect();
-        const past = r.bottom < cutoff;
-        b.classList.toggle("is-past", past);
+
+        // progress from 0..1 as it moves above "start" toward "end"
+        const t = (start - r.bottom) / (start - end);
+        const p = clamp(t, 0, 1);
+
+        const blur = (p * parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--blurPast"))).toFixed(2);
+        const dim  = (1 - p * (1 - parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dimPast")))).toFixed(3);
+
+        b.style.setProperty("--b", blur + "px");
+        b.style.setProperty("--o", dim);
       });
     }
 
-    // gentle float linked to scroll
+    // Gentle flow linked to scroll
     function onScrollFlow(){
       const vh = window.innerHeight;
+
       bubbles.forEach(el=>{
         const r = el.getBoundingClientRect();
         const mid = r.top + r.height/2;
-        const t = (mid - vh/2) / vh;        // -1..1-ish
-        const y = clamp(t * 8, -8, 8);      // subtle float
+        const t = (mid - vh/2) / vh;      // -1..1-ish
+        const y = clamp(t * 7, -7, 7);    // very subtle
         el.style.setProperty("--fy", y.toFixed(2) + "px");
       });
-      markPast();
+
+      updatePastBlur();
     }
 
-    window.addEventListener("scroll", onScrollFlow, { passive:true });
+    // RAF throttle to keep blur buttery smooth
+    let ticking = false;
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      requestAnimationFrame(()=>{
+        onScrollFlow();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive:true });
+    window.addEventListener("resize", onScroll, { passive:true });
+
+    // initial
     onScrollFlow();
   } else {
     document.querySelectorAll(".reveal").forEach(el=>el.classList.add("is-visible"));
