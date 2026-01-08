@@ -9,17 +9,14 @@
     :root{
       --text:#1a1020;
       --muted:rgba(26,16,32,.62);
-      --line:rgba(26,16,32,.12);
 
       --bg:#fff3fa;
-      --card:#ffffff;
       --radius:22px;
       --max:1100px;
 
       --pink:#ff4fa3;
       --pink2:#ff7fc5;
-      --pinkSoft:#ffd1e6;
-      --glow:rgba(255,79,163,.18);
+      --glow:rgba(255,79,163,.20);
       --shadow:0 16px 46px rgba(255,79,163,.14);
     }
 
@@ -102,39 +99,27 @@
       border-radius:999px;
     }
 
-    /* Pink highlight */
-    .highlight{
-      display:inline;
-      background:
-        linear-gradient(transparent 62%, rgba(255,127,197,.55) 62%, rgba(255,127,197,.55) 90%, transparent 90%);
-      padding:0 .08em;
-      border-radius:10px;
-      box-decoration-break:clone;
-      -webkit-box-decoration-break:clone;
-    }
-    .highlightPulse{
-      background-size:0% 100%;
-      background-repeat:no-repeat;
-      background-image:linear-gradient(transparent 62%, rgba(255,127,197,.55) 62%, rgba(255,127,197,.55) 90%, transparent 90%);
-      animation:highlightIn .9s ease .35s forwards;
-    }
-    @keyframes highlightIn{ to{background-size:100% 100%;} }
-
     h1{
       font-size: clamp(40px, 6vw, 72px);
       line-height:1.02;
       margin:14px 0 12px;
       letter-spacing:-.03em;
     }
+
+    /* Replace highlight with glow shadow beneath letters */
+    .titleGlow{
+      color:var(--pink);
+      text-shadow:
+        0 14px 0 rgba(255,79,163,.12),   /* “shadow beneath” */
+        0 24px 26px rgba(255,79,163,.18),
+        0 10px 40px rgba(255,79,163,.10);
+    }
+
     .sub{
       font-size: clamp(16px, 2.2vw, 20px);
       color:var(--muted);
       max-width:70ch;
       margin:0;
-    }
-    .pinkTitle{
-      color:var(--pink);
-      text-shadow:0 10px 30px rgba(255,79,163,.12);
     }
 
     /* Sticky hero */
@@ -148,10 +133,11 @@
       border-bottom:1px solid rgba(255,79,163,.14);
     }
 
+    /* Rounded edges for slideshow container */
     .heroCanvas{
       width:min(980px, 92vw);
       height:min(560px, 60vh);
-      border-radius:var(--radius);
+      border-radius:28px;                 /* rounder */
       border:1px solid rgba(255,79,163,.22);
       box-shadow:var(--shadow);
       transform: translateY(var(--ty, 0px)) scale(var(--scale, 1));
@@ -160,10 +146,11 @@
       transition: filter .08s linear;
       will-change: transform, filter, opacity;
       position:relative;
-      overflow:hidden;
+      overflow:hidden;                     /* IMPORTANT for rounded images */
       background:#fff;
     }
 
+    /* Slides inherit rounded edges because of overflow:hidden */
     .heroSlide{
       position:absolute; inset:0;
       width:100%; height:100%;
@@ -232,18 +219,12 @@
       line-height:1;
     }
 
-    .heroTitle{
-      font-size: clamp(22px, 3.2vw, 34px);
-      margin:14px 0 10px;
-      letter-spacing:-.02em;
-      color:#fff;
-      text-shadow:0 14px 40px rgba(0,0,0,.25);
-    }
+    /* Remove “Showreel energy...” title entirely */
     .heroMeta{
       font-size:15px;
       color:rgba(255,255,255,.85);
       max-width:72ch;
-      margin:0;
+      margin:14px 0 0 0;
     }
 
     .heroControls{
@@ -348,7 +329,7 @@
 
   <div class="wrap section pageFade">
     <div class="eyebrow">Portfolio</div>
-    <h1 class="pinkTitle"><span class="highlight highlightPulse">Video.</span> Motion. Design.</h1>
+    <h1 class="titleGlow">Video. Motion. Design.</h1>
     <p class="sub">
       Video editing, photography, audio, and graphic design including logos. Flexible across software, with a preference for After Effects and Premiere Pro.
     </p>
@@ -358,7 +339,7 @@
     <div class="heroSticky">
       <div class="heroCanvas" id="heroCanvas">
 
-        <!-- Slideshow images (they are in Photos/) -->
+        <!-- Slideshow images (in Photos/) -->
         <img class="heroSlide is-active" src="Photos/P1.JPG" alt="Photo P1" />
         <img class="heroSlide" src="Photos/P2.JPG" alt="Photo P2" />
         <img class="heroSlide" src="Photos/P3.JPG" alt="Photo P3" />
@@ -374,11 +355,8 @@
             photos taken by me <span aria-hidden="true">✿</span>
           </div>
 
-          <div class="heroTitle">
-            <span class="highlight">Showreel energy</span>, Apple-clean layout
-          </div>
           <p class="heroMeta">
-            Scroll for the motion — and tap the cute buttons to flip through my photos ♡
+            Tap the cute buttons to flip through my photos ♡
           </p>
 
           <div class="heroControls" aria-label="Slideshow controls">
@@ -398,9 +376,7 @@
 
   <div class="wrap section">
     <div class="eyebrow reveal">Work</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">
-      Featured <span class="highlight">projects</span>
-    </h1>
+    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">Featured projects</h1>
     <div class="grid">
       <div class="card reveal">
         <strong>Short-form Reels</strong>
@@ -423,9 +399,7 @@
 
   <div class="wrap section">
     <div class="eyebrow reveal">About</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">
-      A little <span class="highlight">about</span> me
-    </h1>
+    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">A little about me</h1>
     <p class="sub reveal">
       I’m a media studies student focused on video editing and creative production, with experience in photography, audio, and graphic design.
     </p>
@@ -479,7 +453,6 @@
       Array.from(dotsWrap.children).forEach((d, k) => d.classList.toggle("is-active", k === idx));
     }
 
-    // Dots
     slides.forEach((_, i) => {
       const b = document.createElement("button");
       b.className = "dotBtn" + (i === 0 ? " is-active" : "");
