@@ -18,6 +18,60 @@
       --shadowSoft:0 12px 30px rgba(255,79,163,.10);
       --border:rgba(255,79,163,.18);
     }
+/* subtle gradient shimmer text */
+.sparkleText{
+  background: linear-gradient(90deg,
+    rgba(255,79,163,.95),
+    rgba(255,127,197,.95),
+    rgba(255,255,255,.92),
+    rgba(255,127,197,.95),
+    rgba(255,79,163,.95)
+  );
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4.8s ease-in-out infinite;
+}
+
+@keyframes shimmer{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}
+
+/* tiny twinkle sparkles (very subtle) */
+.sparkleWrap{
+  position: relative;
+  isolation: isolate;
+}
+.sparkleWrap::after{
+  content:"";
+  position:absolute;
+  inset:-18px -10px;
+  pointer-events:none;
+  z-index:-1;
+  opacity:.55;
+  background:
+    radial-gradient(6px 6px at 14% 28%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(5px 5px at 28% 58%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(7px 7px at 62% 24%, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(5px 5px at 82% 52%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(6px 6px at 90% 18%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(.2px);
+  animation: twinkle 3.6s ease-in-out infinite;
+}
+
+@keyframes twinkle{
+  0%,100%{ transform: translateY(0px); opacity:.45; }
+  50%{ transform: translateY(-3px); opacity:.70; }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .sparkleText{ animation:none; }
+  .sparkleWrap::after{ animation:none; }
+}
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
