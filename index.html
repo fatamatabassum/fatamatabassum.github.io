@@ -111,14 +111,16 @@
 
     /* VIDEO INSIDE HERO */
     .heroVideo{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transform: scale(1.06);
-      filter: saturate(1.1) contrast(1.05);
-    }
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform: scale(1.06);
+  filter: saturate(1.1) contrast(1.05);
+  z-index:1;
+}
+
     /* Soft overlay so text stays readable */
     .heroCanvas::after{
       content:"";
@@ -134,13 +136,15 @@
     }
 
     .heroOverlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      padding:28px;
-      z-index:2;
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:28px;
+}
+
     }
     .pill{
       display:inline-flex;
@@ -240,9 +244,17 @@
   <section class="heroStage" id="top">
     <div class="heroSticky">
       <div class="heroCanvas" id="heroCanvas" aria-label="Motion hero">
-        <video class="heroVideo" autoplay muted loop playsinline preload="metadata">
-          <source src="assets/video/Me.mp4" type="video/mp4">
-        </video>
+       <video
+  class="heroVideo"
+  autoplay
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  preload="auto">
+  <source src="assets/video/Me.mp4" type="video/mp4">
+</video>
+
 
         <div class="heroOverlay">
           <div class="pill">Video Editor · Motion · Design</div>
