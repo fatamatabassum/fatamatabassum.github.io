@@ -25,7 +25,7 @@
       letter-spacing:-0.01em;
     }
 
-    /* Apple-ish top nav */
+    /* Apple-style top nav */
     header{
       position:sticky; top:0; z-index:50;
       backdrop-filter:saturate(180%) blur(16px);
@@ -39,14 +39,13 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
     }
     .brand{
       font-weight:650;
       text-decoration:none;
       color:var(--text);
     }
-    .links{display:flex; gap:14px; flex-wrap:wrap}
+    .links{display:flex; gap:14px}
     .links a{
       color:var(--muted);
       text-decoration:none;
@@ -54,10 +53,15 @@
     }
     .links a:hover{color:var(--pink)}
 
-    /* Layout helpers */
+    /* Layout */
     .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
     .section{padding:72px 0}
-    .eyebrow{font-size:14px; color:var(--pink); letter-spacing:.08em; text-transform:uppercase}
+    .eyebrow{
+      font-size:14px;
+      color:var(--pink);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
     h1{
       font-size: clamp(40px, 6vw, 72px);
       line-height:1.02;
@@ -69,17 +73,20 @@
       max-width:70ch;
       margin:0;
     }
+    .pinkTitle{
+      color:var(--pink);
+    }
 
-    /* Sticky hero (scroll stage) */
+    /* Sticky hero */
     .heroStage{
       position:relative;
-      height: 180vh; /* gives room for scroll motion */
+      height:180vh;
       overflow:hidden;
     }
     .heroSticky{
       position:sticky;
-      top:56px; /* sits below sticky header */
-      height: calc(100vh - 56px);
+      top:56px;
+      height:calc(100vh - 56px);
       display:grid;
       place-items:center;
       border-bottom:1px solid var(--line);
@@ -88,8 +95,6 @@
       width:min(980px, 92vw);
       height:min(560px, 60vh);
       border-radius:var(--radius);
-      overflow:hidden;
-      position:relative;
       border:1px solid var(--line);
       background:
         radial-gradient(1200px 600px at 15% 20%, #ff6ec7 0%, rgba(255,110,199,0) 55%),
@@ -104,41 +109,37 @@
     }
 
     .heroOverlay{
-      position:absolute; inset:0;
-      display:flex; flex-direction:column;
-      justify-content:flex-end;
+      position:absolute;
+      inset:0;
       padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
     }
     .pill{
       display:inline-flex;
-      align-items:center;
-      gap:8px;
       padding:8px 12px;
       border-radius:999px;
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(11,11,15,.10);
-      width:fit-content;
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(11,11,15,.1);
       font-size:13px;
       color:rgba(11,11,15,.75);
-      backdrop-filter: blur(10px);
+      width:fit-content;
     }
     .heroTitle{
-      margin:14px 0 10px;
       font-size: clamp(22px, 3.2vw, 34px);
-      line-height:1.05;
-      letter-spacing:-0.02em;
+      margin:14px 0 10px;
     }
     .heroMeta{
-      margin:0 0 4px;
+      font-size:15px;
       color:rgba(11,11,15,.68);
       max-width:72ch;
-      font-size:15px;
     }
 
-    /* Clean cards */
+    /* Cards */
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
       gap:14px;
       margin-top:26px;
     }
@@ -147,26 +148,20 @@
       border-radius:var(--radius);
       padding:18px;
       background:#fff;
-      box-shadow: 0 1px 0 rgba(11,11,15,.04);
     }
-    .card strong{display:block; font-size:16px; margin-bottom:6px}
-    .card p{margin:0; color:var(--muted); font-size:14px; line-height:1.4}
+    .card strong{display:block;margin-bottom:6px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
 
-    /* Subtle reveal on scroll */
+    /* Reveal */
     .reveal{
       opacity:0;
-      transform: translateY(14px);
-      transition: opacity .6s ease, transform .6s ease;
+      transform:translateY(14px);
+      transition:opacity .6s ease, transform .6s ease;
     }
-    .reveal.is-visible{
-      opacity:1;
-      transform:none;
-    }
+    .reveal.is-visible{opacity:1;transform:none}
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .heroCanvas{transition:none !important}
-      .reveal{transition:none !important; opacity:1; transform:none}
+      .heroCanvas,.reveal{transition:none;transform:none}
     }
   </style>
 </head>
@@ -185,19 +180,19 @@
 
   <div class="wrap section">
     <div class="eyebrow">Portfolio</div>
-    <h1>Bright edits. Clean motion.</h1>
+    <h1 class="pinkTitle">Video. Motion. Design.</h1>
     <p class="sub">
-      Video editing, photography, audio, and graphic design including logos, created with After Effects, Premiere Pro, and the Adobe Suite.
+      Video editing, photography, audio, and graphic design including logos. Flexible across software, with a preference for After Effects and Premiere Pro.
     </p>
   </div>
 
-  <section class="heroStage" id="top">
+  <section class="heroStage">
     <div class="heroSticky">
-      <div class="heroCanvas" id="heroCanvas" aria-label="Motion hero">
+      <div class="heroCanvas" id="heroCanvas">
         <div class="heroOverlay">
           <div class="pill">Video Editor · Motion · Design</div>
           <div class="heroTitle">Showreel energy, Apple-clean layout</div>
-          <p class="heroMeta">Scroll to see the motion. This block is your “hero” where you can later swap in a video still, reel clip, or graphic.</p>
+          <p class="heroMeta">Scroll to see the motion. This block can later become your reel or a video still.</p>
         </div>
       </div>
     </div>
@@ -206,7 +201,6 @@
   <div class="wrap section">
     <div class="eyebrow reveal">Work</div>
     <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">Featured projects</h1>
-
     <div class="grid">
       <div class="card reveal">
         <strong>Short-form Reels</strong>
@@ -236,42 +230,32 @@
   </div>
 
   <script>
-    const hero = document.getElementById("heroCanvas");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hero=document.getElementById("heroCanvas");
+    const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function clamp(v, min, max){ return Math.min(max, Math.max(min, v)); }
+    function clamp(v,min,max){return Math.min(max,Math.max(min,v));}
 
     function onScroll(){
-      if (reduceMotion) return;
+      if(reduce) return;
+      const stage=hero.closest(".heroStage");
+      const r=stage.getBoundingClientRect();
+      const vh=window.innerHeight;
+      const total=r.height-vh;
+      const sc=clamp(-r.top,0,total);
+      const t=total>0?sc/total:0;
 
-      const stage = hero.closest(".heroStage");
-      const r = stage.getBoundingClientRect();
-      const viewport = window.innerHeight;
-
-      const total = r.height - viewport;
-      const scrolled = clamp(-r.top, 0, total);
-      const t = total > 0 ? scrolled / total : 0;
-
-      const scale = 1 + (0.06 * t);
-      const ty = 18 * (1 - t);
-      const blur = 8 * t;
-      const op = 1 - (0.22 * t);
-
-      hero.style.setProperty("--scale", scale.toFixed(4));
-      hero.style.setProperty("--ty", ty.toFixed(2) + "px");
-      hero.style.setProperty("--blur", blur.toFixed(2) + "px");
-      hero.style.setProperty("--op", op.toFixed(3));
+      hero.style.setProperty("--scale",(1+.06*t).toFixed(4));
+      hero.style.setProperty("--ty",(18*(1-t)).toFixed(2)+"px");
+      hero.style.setProperty("--blur",(8*t).toFixed(2)+"px");
+      hero.style.setProperty("--op",(1-.22*t).toFixed(3));
     }
 
-    const io = new IntersectionObserver((entries)=>{
-      for(const e of entries){
-        if(e.isIntersecting) e.target.classList.add("is-visible");
-      }
-    }, { threshold: 0.12 });
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>e.isIntersecting&&e.target.classList.add("is-visible"));
+    },{threshold:.12});
 
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-
-    window.addEventListener("scroll", onScroll, { passive:true });
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+    window.addEventListener("scroll",onScroll,{passive:true});
     onScroll();
   </script>
 </body>
