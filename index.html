@@ -11,212 +11,235 @@
       --muted:rgba(11,11,15,.65);
       --line:rgba(11,11,15,.12);
       --bg:#ffffff;
-      --radius:22px;
-      --max:1100px;
-      --pink:#ff4fa3;
+      --card:#ffffff;
+      --radius:18px;
+      --shadow:0 12px 40px rgba(0,0,0,.08);
     }
 
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
+    html,body{height:100%}
     body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
       color:var(--text);
       background:var(--bg);
-      letter-spacing:-0.01em;
+      line-height:1.45;
     }
 
-    /* Top nav */
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Layout */
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px;
+    }
+
     header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:saturate(180%) blur(16px);
-      background:rgba(255,255,255,.75);
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:saturate(160%) blur(12px);
+      background:rgba(255,255,255,.72);
       border-bottom:1px solid var(--line);
     }
+
     .nav{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:14px 18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:16px;
+      padding:14px 24px;
+      max-width:1100px;
+      margin:0 auto;
     }
+
     .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
       font-weight:650;
-      text-decoration:none;
+      letter-spacing:.2px;
+    }
+
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--text);
+      opacity:.9;
+    }
+
+    .links{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .links a{
+      padding:8px 10px;
+      border-radius:12px;
+      transition:background .25s ease, color .25s ease;
+    }
+
+    .links a:hover{
+      background:rgba(0,0,0,.05);
       color:var(--text);
     }
-    .links{display:flex; gap:14px; flex-wrap:wrap}
-    .links a{
-      color:var(--muted);
-      text-decoration:none;
-      font-size:14px;
-    }
-    .links a:hover{color:var(--pink)}
 
-    /* Layout */
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
-    .section{padding:72px 0}
-    .eyebrow{
-      font-size:14px;
-      color:var(--pink);
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-    h1{
-      font-size: clamp(40px, 6vw, 72px);
-      line-height:1.02;
-      margin:14px 0 12px;
-    }
-    .sub{
-      font-size: clamp(16px, 2.2vw, 20px);
-      color:var(--muted);
-      max-width:70ch;
-      margin:0;
-    }
-    .pinkTitle{ color:var(--pink); }
-
-    /* Sticky hero */
-    .heroStage{
+    /* HERO (fade in on load + text animation) */
+    .hero{
       position:relative;
-      height:180vh;
+      width:100%;
+      height:82vh;
+      min-height:520px;
       overflow:hidden;
-    }
-    .heroSticky{
-      position:sticky;
-      top:56px;
-      height:calc(100vh - 56px);
-      display:grid;
-      place-items:center;
-      border-bottom:1px solid var(--line);
-    }
-    .heroCanvas{
-      width:min(980px, 92vw);
-      height:min(560px, 60vh);
-      border-radius:var(--radius);
-      overflow:hidden;
-      position:relative;
-      border:1px solid var(--line);
-      background:
-        radial-gradient(1200px 600px at 15% 20%, #ff6ec7 0%, rgba(255,110,199,0) 55%),
-        radial-gradient(1000px 600px at 80% 30%, #ff9ad5 0%, rgba(255,154,213,0) 55%),
-        radial-gradient(1100px 700px at 45% 90%, #ffc3e6 0%, rgba(255,195,230,0) 60%),
-        linear-gradient(180deg, #ffffff 0%, #fff4fb 100%);
-      transform: translateY(var(--ty, 0px)) scale(var(--scale, 1));
-      filter: blur(var(--blur, 0px));
-      opacity: var(--op, 1);
-      transition: filter .08s linear;
-      will-change: transform, filter, opacity;
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      background:#111;
+      margin-top:18px;
+
+      opacity:0;
+      transform:translateY(10px);
+      animation:pageFade .9s ease forwards;
     }
 
-    /* VIDEO INSIDE HERO */
-    .heroVideo{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transform: scale(1.06);
-  filter: saturate(1.1) contrast(1.05);
-  z-index:1;
-}
+    .hero-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.02);
+      filter:saturate(1.05) contrast(1.02);
+      transition:transform 1.2s ease;
+    }
 
-    /* Soft overlay so text stays readable */
-    .heroCanvas::after{
+    .hero:hover .hero-image{
+      transform:scale(1.06);
+    }
+
+    .hero::after{
       content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(
+      position:absolute; inset:0;
+      background:linear-gradient(
         180deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,.55) 72%,
-        rgba(255,255,255,.9) 100%
+        rgba(0,0,0,.15) 0%,
+        rgba(0,0,0,.22) 35%,
+        rgba(0,0,0,.55) 100%
       );
       pointer-events:none;
     }
 
-    .heroOverlay{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:28px;
-}
-
+    .hero-text{
+      position:absolute;
+      left:28px;
+      bottom:26px;
+      right:28px;
+      color:#fff;
+      z-index:2;
     }
-    .pill{
-      display:inline-flex;
-      align-items:center;
+
+    .hero-text h1,
+    .hero-text p,
+    .hero-text .chips{
+      opacity:0;
+      transform:translateY(14px);
+      animation:rise .85s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .hero-text h1{
+      margin:0 0 8px 0;
+      font-size:clamp(34px, 4vw, 56px);
+      letter-spacing:-.02em;
+      animation-delay:.25s;
+    }
+
+    .hero-text p{
+      margin:0 0 14px 0;
+      font-size:clamp(14px, 1.4vw, 18px);
+      opacity:.9;
+      max-width:60ch;
+      animation-delay:.42s;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
       gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.78);
-      border:1px solid rgba(11,11,15,.10);
-      width:fit-content;
-      font-size:13px;
-      color:rgba(11,11,15,.75);
-      backdrop-filter: blur(10px);
-    }
-    .heroTitle{
-      margin:14px 0 10px;
-      font-size: clamp(22px, 3.2vw, 34px);
-      line-height:1.05;
-      letter-spacing:-0.02em;
-    }
-    .heroMeta{
-      margin:0 0 4px;
-      color:rgba(11,11,15,.68);
-      max-width:72ch;
-      font-size:15px;
+      animation-delay:.58s;
     }
 
-    /* Cards */
+    .chip{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(8px);
+    }
+
+    @keyframes pageFade{
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    @keyframes rise{
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    /* Sections */
+    .section{
+      padding:34px 0;
+      border-bottom:1px solid var(--line);
+    }
+
+    .section h2{
+      font-size:18px;
+      margin:0 0 14px 0;
+      letter-spacing:.2px;
+    }
+
     .grid{
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns:repeat(3, 1fr);
       gap:14px;
-      margin-top:26px;
     }
+
     .card{
       border:1px solid var(--line);
       border-radius:var(--radius);
-      padding:18px;
-      background:#fff;
-      box-shadow: 0 1px 0 rgba(11,11,15,.04);
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      will-change: transform;
+      background:var(--card);
+      padding:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.04);
+      transition:transform .25s ease, box-shadow .25s ease;
     }
+
     .card:hover{
-      transform: translateY(-6px) scale(1.01);
-      border-color: rgba(255,79,163,.45);
-      box-shadow: 0 14px 34px rgba(11,11,15,.10);
-    }
-    .card strong{
-      display:block;
-      font-size:16px;
-      margin-bottom:6px;
-      transition: color .25s ease;
-    }
-    .card:hover strong{ color: var(--pink); }
-    .card p{margin:0; color:var(--muted); font-size:14px; line-height:1.4}
-
-    /* Reveal on scroll */
-    .reveal{
-      opacity:0;
-      transform: translateY(14px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .reveal.is-visible{
-      opacity:1;
-      transform:none;
+      transform:translateY(-4px);
+      box-shadow:0 14px 32px rgba(0,0,0,.08);
     }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .heroCanvas{transition:none !important}
-      .reveal{transition:none !important; opacity:1; transform:none}
+    .card h3{
+      margin:0 0 6px 0;
+      font-size:15px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    footer{
+      padding:28px 0 10px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Mobile */
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .hero{height:70vh; min-height:480px}
+      .hero-text{left:18px; right:18px; bottom:18px}
     }
   </style>
 </head>
@@ -224,122 +247,90 @@
 <body>
   <header>
     <div class="nav">
-      <a class="brand" href="index.html">Fatama</a>
+      <div class="brand">
+        <span class="dot"></span>
+        <span>Fatama Tabassum</span>
+      </div>
+
       <nav class="links">
-        <a href="work.html">Work</a>
-        <a href="about.html">About</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
         <a href="contact.html">Contact</a>
       </nav>
     </div>
   </header>
 
-  <div class="wrap section">
-    <div class="eyebrow">Portfolio</div>
-    <h1 class="pinkTitle">Video. Motion. Design.</h1>
-    <p class="sub">
-      Video editing, photography, audio, and graphic design including logos. Flexible across software, with a preference for After Effects and Premiere Pro.
-    </p>
-  </div>
-
-  <section class="heroStage" id="top">
-    <div class="heroSticky">
-      <div class="heroCanvas" id="heroCanvas" aria-label="Motion hero">
-       <video
-  class="heroVideo"
-  autoplay
-  muted
-  loop
-  playsinline
-  webkit-playsinline
-  preload="auto">
-  <source src="assets/video/Me.mp4" type="video/mp4">
-</video>
-
-
-        <div class="heroOverlay">
-          <div class="pill">Video Editor · Motion · Design</div>
-          <div class="heroTitle">Showreel energy, Apple-clean layout</div>
-          <p class="heroMeta">Scroll to see the motion. This hero plays a muted loop of my reel.</p>
+  <main class="wrap">
+    <!-- HERO (showreel replacement image: P1.JPG) -->
+    <section class="hero" aria-label="Hero">
+      <img src="P1.JPG" alt="Showreel placeholder image" class="hero-image" />
+      <div class="hero-text">
+        <h1>Showreel energy,<br>Apple-clean layout.</h1>
+        <p>
+          I’m Fatama — I make clean, cinematic edits and visual stories. This hero image is a placeholder
+          until I swap in a reel.
+        </p>
+        <div class="chips">
+          <span class="chip">Editing</span>
+          <span class="chip">Cinematography</span>
+          <span class="chip">Short-form</span>
+          <span class="chip">Color</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="wrap section">
-    <div class="eyebrow reveal">Work</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">Featured projects</h1>
+    <!-- WORK -->
+    <section id="work" class="section">
+      <h2>Selected Work</h2>
+      <div class="grid">
+        <a class="card" href="#" aria-label="Project 1">
+          <h3>Project Title 1</h3>
+          <p>Short description of what this is. (Replace later)</p>
+        </a>
 
-    <div class="grid">
-      <div class="card reveal">
-        <strong>Short-form Reels</strong>
-        <p>Fast pacing, clean captions, punchy transitions.</p>
-      </div>
-      <div class="card reveal">
-        <strong>YouTube Editing</strong>
-        <p>Structure, rhythm, retention, and packaging.</p>
-      </div>
-      <div class="card reveal">
-        <strong>Motion Graphics</strong>
-        <p>After Effects titles, logos, and animated elements.</p>
-      </div>
-      <div class="card reveal">
-        <strong>Photography</strong>
-        <p>Shoot and edit for mood, color, and clarity.</p>
-      </div>
-    </div>
-  </div>
+        <a class="card" href="#" aria-label="Project 2">
+          <h3>Project Title 2</h3>
+          <p>Short description of what this is. (Replace later)</p>
+        </a>
 
-  <div class="wrap section">
-    <div class="eyebrow reveal">About</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">A little about me</h1>
-    <p class="sub reveal">
-      I’m a media studies student focused on video editing and creative production, with experience in photography, audio, and graphic design.
-    </p>
-  </div>
+        <a class="card" href="#" aria-label="Project 3">
+          <h3>Project Title 3</h3>
+          <p>Short description of what this is. (Replace later)</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <h2>About</h2>
+      <div class="card">
+        <h3>Hi 👋</h3>
+        <p>
+          I’m a media creator focused on clean edits, mood, and storytelling. I like minimal design,
+          smooth motion, and visuals that feel intentional. (Swap this with your real bio)
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Fatama Tabassum — built with GitHub Pages
+    </footer>
+  </main>
 
   <script>
-    const hero = document.getElementById("heroCanvas");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    function clamp(v, min, max){ return Math.min(max, Math.max(min, v)); }
+    // Optional: make hero animation wait until image is ready (smoother on slow internet)
+    const hero = document.querySelector(".hero");
+    const heroImg = document.querySelector(".hero-image");
 
-    function onScroll(){
-      if (reduceMotion) return;
-
-      const stage = hero.closest(".heroStage");
-      const r = stage.getBoundingClientRect();
-      const viewport = window.innerHeight;
-
-      const total = r.height - viewport;
-      const scrolled = clamp(-r.top, 0, total);
-      const t = total > 0 ? scrolled / total : 0;
-
-      const scale = 1 + (0.06 * t);
-      const ty = 18 * (1 - t);
-      const blur = 8 * t;
-      const op = 1 - (0.22 * t);
-
-      hero.style.setProperty("--scale", scale.toFixed(4));
-      hero.style.setProperty("--ty", ty.toFixed(2) + "px");
-      hero.style.setProperty("--blur", blur.toFixed(2) + "px");
-      hero.style.setProperty("--op", op.toFixed(3));
-    }
-
-    const io = new IntersectionObserver((entries)=>{
-      for(const e of entries){
-        if(e.isIntersecting) e.target.classList.add("is-visible");
+    if (hero && heroImg) {
+      if (heroImg.complete) {
+        hero.classList.add("ready");
+      } else {
+        heroImg.addEventListener("load", () => hero.classList.add("ready"));
       }
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-
-    window.addEventListener("scroll", onScroll, { passive:true });
-    onScroll();
-
-    // Optional: pause video if user prefers reduced motion
-    if (reduceMotion) {
-      const v = document.querySelector(".heroVideo");
-      if (v) v.pause();
     }
   </script>
 </body>
