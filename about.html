@@ -9,16 +9,11 @@
     :root{
       --text:#1a1020;
       --muted:rgba(26,16,32,.62);
-
       --bg1:#fff0f9;
       --bg2:#fff8fd;
-
       --radius:22px;
       --max:1100px;
-
       --pink:#ff4fa3;
-      --pink2:#ff7fc5;
-
       --shadow:0 16px 46px rgba(255,79,163,.14);
       --shadowSoft:0 12px 30px rgba(255,79,163,.10);
       --border:rgba(255,79,163,.18);
@@ -62,29 +57,22 @@
       letter-spacing:-.02em;
     }
     .homeIcon{
-  width:22px;
-  height:22px;
-  display:grid;
-  place-items:center;
-  border-radius:999px;
-  background:rgba(255,79,163,.16);
-  border:1px solid rgba(255,79,163,.28);
-  color:var(--pink);
-  font-size:14px;
-  line-height:1;
-  box-shadow:0 6px 16px rgba(255,79,163,.18);
-  transition:transform .18s ease, background .18s ease;
-}
-
-.brand:hover .homeIcon{
-  transform:translateY(-1px);
-  background:rgba(255,79,163,.22);
-}
-    .brandDot{
-      width:10px;height:10px;border-radius:50%;
-      background:var(--pink);
-      box-shadow:0 0 0 6px rgba(255,79,163,.12);
+      width:22px;height:22px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(255,79,163,.16);
+      border:1px solid rgba(255,79,163,.28);
+      color:var(--pink);
+      font-size:14px;
+      box-shadow:0 6px 16px rgba(255,79,163,.18);
+      transition:transform .18s ease, background .18s ease;
     }
+    .brand:hover .homeIcon{
+      transform:translateY(-1px);
+      background:rgba(255,79,163,.22);
+    }
+
     .links{display:flex;gap:14px}
     .links a{
       font-size:14px;
@@ -130,10 +118,19 @@
       margin:0 0 18px 0;
     }
 
-    /* STATUS */
-    .statusRow{
-      margin-top:26px;
+    /* OPTION B — typing line */
+    .typeLine{
+      display:inline-block;
+      white-space:nowrap;
+      overflow:hidden;
+      border-right:2px solid rgba(255,79,163,.55);
+      animation:typing 1.4s steps(28,end) .3s both, blink .8s step-end infinite;
     }
+    @keyframes typing{ from{ width:0 } to{ width:100% } }
+    @keyframes blink{ 50%{ border-color:transparent } }
+
+    /* STATUS */
+    .statusRow{margin-top:26px}
     .statusPill{
       display:inline-flex;
       align-items:center;
@@ -143,13 +140,11 @@
       background:rgba(255,255,255,.88);
       border:1px solid rgba(255,79,163,.18);
       box-shadow:0 12px 26px rgba(255,79,163,.10);
-      color:rgba(26,16,32,.80);
       font-size:14px;
     }
     .pulseDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--pink);
-      box-shadow:0 0 0 0 rgba(255,79,163,.35);
       animation:pulse 1.6s ease-in-out infinite;
     }
     @keyframes pulse{
@@ -158,7 +153,21 @@
       100%{box-shadow:0 0 0 0 rgba(255,79,163,0)}
     }
 
-    /* GRID */
+    /* OPTION A — reveal + motion */
+    .reveal{
+      opacity:0;
+      transform:translateY(14px);
+      transition:opacity .7s ease, transform .7s ease;
+    }
+    .reveal.is-visible{opacity:1;transform:none}
+
+    .pageFade{
+      opacity:0;
+      transform:translateY(10px);
+      animation:pageIn .9s ease forwards;
+    }
+    @keyframes pageIn{to{opacity:1;transform:translateY(0)}}
+
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -171,16 +180,11 @@
       border-radius:var(--radius);
       border:1px solid rgba(255,79,163,.16);
       box-shadow:0 10px 26px rgba(255,79,163,.08);
+      transition:transform .18s ease, box-shadow .18s ease;
     }
-    .card strong{
-      display:block;
-      margin-bottom:6px;
-      font-size:15px;
-    }
-    .card p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
+    .card:hover{
+      transform:translateY(-6px) rotate(-0.2deg);
+      box-shadow:0 18px 42px rgba(255,79,163,.16);
     }
 
     .footerNote{
@@ -190,6 +194,15 @@
       color:var(--muted);
       opacity:.85;
     }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal,.pageFade,.typeLine{
+        animation:none;
+        opacity:1;
+        transform:none;
+        border-right:none;
+      }
+    }
   </style>
 </head>
 
@@ -197,68 +210,83 @@
 
 <header>
   <div class="nav">
-    <div class="brand"><a class="brand" href="index.html">
-  <span class="homeIcon" aria-hidden="true">⌂</span>
-  Fatama
-</a>
+    <a class="brand" href="index.html">
+      <span class="homeIcon">⌂</span>
+      Fatama
+    </a>
     <nav class="links">
       <a href="work.html">Work</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
-      
   </div>
 </header>
 
-<div class="wrap section">
-  <div class="eyebrow">About</div>
-  <h1 class="titleGlow">Hi, I’m Fatama ✿</h1>
+<div class="wrap section pageFade">
+  <div class="eyebrow reveal">About</div>
+  <h1 class="titleGlow reveal">Hi, I’m Fatama ✿</h1>
 
-  <p class="sub">
+  <p class="sub reveal">
+    <span class="typeLine">video-first creator ✿ edits, photos, motion.</span>
+  </p>
+
+  <p class="sub reveal">
     I’m a media studies student and visual creator with a strong focus on video-based work.
-    I work across video editing, photography, audio, and graphic design, and I enjoy creating
-    visuals that feel expressive, playful, and intentional.
+    I work across video editing, photography, audio, and graphic design, and I love creating
+    visuals that feel expressive and playful.
   </p>
 
-  <p class="sub">
+  <p class="sub reveal">
     Most of my work lives in short-form edits, motion, and photography.
-    I like experimenting with color, rhythm, and mood — whether that’s through edits,
-    visuals, or small design details.
+    I enjoy experimenting with color, rhythm, and mood through visuals.
   </p>
 
-  <div class="statusRow">
+  <div class="statusRow reveal">
     <div class="statusPill">
       <span class="pulseDot"></span>
       open to projects & collaborations ✿
     </div>
   </div>
 
-  <div class="grid">
+  <div class="grid reveal">
     <div class="card">
       <strong>Video Editing</strong>
-      <p>Short-form edits, pacing, transitions, and captions.</p>
+      <p>Short-form edits, pacing, transitions, captions.</p>
     </div>
-
     <div class="card">
       <strong>Photography</strong>
-      <p>Shooting and editing with attention to color and mood.</p>
+      <p>Shooting and editing with attention to mood.</p>
     </div>
-
     <div class="card">
       <strong>Motion & Design</strong>
-      <p>Simple motion graphics, titles, and visual elements.</p>
+      <p>Animated titles and visual elements.</p>
     </div>
-
     <div class="card">
       <strong>Audio</strong>
-      <p>Basic sound editing and cleanup for video projects.</p>
+      <p>Sound cleanup and basic mixing.</p>
     </div>
   </div>
 
-  <div class="footerNote">
+  <div class="footerNote reveal">
     thanks for stopping by ♡
   </div>
 </div>
+
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if(!reduce){
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add("is-visible");
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+  } else {
+    document.querySelectorAll(".reveal").forEach(el=>el.classList.add("is-visible"));
+  }
+</script>
 
 </body>
 </html>
