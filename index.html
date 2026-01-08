@@ -9,14 +9,10 @@
     :root{
       --text:#1a1020;
       --muted:rgba(26,16,32,.62);
-
       --bg:#fff3fa;
       --radius:22px;
       --max:1100px;
-
       --pink:#ff4fa3;
-      --pink2:#ff7fc5;
-      --glow:rgba(255,79,163,.20);
       --shadow:0 16px 46px rgba(255,79,163,.14);
     }
 
@@ -29,11 +25,11 @@
         radial-gradient(900px 500px at 12% 10%, rgba(255,127,197,.22) 0%, rgba(255,127,197,0) 55%),
         radial-gradient(900px 500px at 88% 18%, rgba(255,79,163,.16) 0%, rgba(255,79,163,0) 58%),
         linear-gradient(180deg, var(--bg) 0%, #ffffff 55%, #fff7fc 100%);
-      letter-spacing:-0.01em;
     }
 
-    a{color:inherit}
+    a{color:inherit;text-decoration:none}
 
+    /* NAV */
     header{
       position:sticky; top:0; z-index:50;
       backdrop-filter:saturate(180%) blur(16px);
@@ -45,450 +41,277 @@
       margin:0 auto;
       padding:14px 18px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
+      align-items:center;
     }
     .brand{
       font-weight:750;
-      text-decoration:none;
-      color:var(--text);
       display:flex;
-      align-items:center;
       gap:10px;
-      letter-spacing:-.02em;
+      align-items:center;
     }
     .brandDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--pink);
       box-shadow:0 0 0 6px rgba(255,79,163,.12);
     }
-
-    .links{display:flex; gap:14px; align-items:center}
+    .links{display:flex;gap:14px}
     .links a{
-      color:var(--muted);
-      text-decoration:none;
       font-size:14px;
+      color:var(--muted);
       padding:8px 10px;
       border-radius:999px;
-      transition:background .22s ease, color .22s ease, transform .22s ease;
     }
     .links a:hover{
-      color:var(--text);
       background:rgba(255,79,163,.14);
-      transform:translateY(-1px);
+      color:var(--text);
     }
 
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    /* LAYOUT */
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
     .section{padding:72px 0}
 
     .eyebrow{
       font-size:13px;
       color:var(--pink);
-      letter-spacing:.10em;
+      letter-spacing:.1em;
       text-transform:uppercase;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .eyebrow::after{
-      content:"";
-      height:1px;
-      width:46px;
-      background:linear-gradient(90deg, rgba(255,79,163,.55), rgba(255,79,163,0));
-      border-radius:999px;
     }
 
     h1{
-      font-size: clamp(40px, 6vw, 72px);
-      line-height:1.02;
+      font-size:clamp(40px,6vw,72px);
       margin:14px 0 12px;
       letter-spacing:-.03em;
     }
 
-    /* Replace highlight with glow shadow beneath letters */
     .titleGlow{
       color:var(--pink);
       text-shadow:
-        0 14px 0 rgba(255,79,163,.12),   /* “shadow beneath” */
+        0 14px 0 rgba(255,79,163,.12),
         0 24px 26px rgba(255,79,163,.18),
         0 10px 40px rgba(255,79,163,.10);
     }
 
     .sub{
-      font-size: clamp(16px, 2.2vw, 20px);
+      font-size:clamp(16px,2.2vw,20px);
       color:var(--muted);
       max-width:70ch;
-      margin:0;
     }
 
-    /* Sticky hero */
-    .heroStage{ position:relative; height:180vh; overflow:hidden; }
+    /* HERO */
+    .heroStage{height:180vh}
     .heroSticky{
       position:sticky;
       top:56px;
       height:calc(100vh - 56px);
       display:grid;
       place-items:center;
-      border-bottom:1px solid rgba(255,79,163,.14);
     }
-
-    /* Rounded edges for slideshow container */
     .heroCanvas{
-      width:min(980px, 92vw);
-      height:min(560px, 60vh);
-      border-radius:28px;                 /* rounder */
-      border:1px solid rgba(255,79,163,.22);
+      width:min(980px,92vw);
+      height:min(560px,60vh);
+      border-radius:28px;
+      overflow:hidden;
       box-shadow:var(--shadow);
-      transform: translateY(var(--ty, 0px)) scale(var(--scale, 1));
-      filter: blur(var(--blur, 0px));
-      opacity: var(--op, 1);
-      transition: filter .08s linear;
-      will-change: transform, filter, opacity;
       position:relative;
-      overflow:hidden;                     /* IMPORTANT for rounded images */
-      background:#fff;
+      transform:translateZ(0);
+      -webkit-mask-image:-webkit-radial-gradient(white, black);
     }
 
-    /* Slides inherit rounded edges because of overflow:hidden */
     .heroSlide{
       position:absolute; inset:0;
       width:100%; height:100%;
       object-fit:cover;
-      transform:scale(1.02);
-      transition:opacity .7s ease, transform 1.2s ease;
       opacity:0;
+      transition:opacity .6s ease, transform 1.2s ease;
+      transform:scale(1.02);
     }
-    .heroSlide.is-active{ opacity:1; }
-    .heroCanvas:hover .heroSlide.is-active{ transform:scale(1.06); }
-
-    .heroCanvas::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(6px 6px at 16% 22%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(5px 5px at 30% 58%, rgba(255,255,255,.48) 0%, rgba(255,255,255,0) 65%),
-        radial-gradient(7px 7px at 70% 30%, rgba(255,255,255,.42) 0%, rgba(255,255,255,0) 62%),
-        radial-gradient(5px 5px at 82% 64%, rgba(255,255,255,.46) 0%, rgba(255,255,255,0) 65%),
-        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
-      opacity:.9;
-      pointer-events:none;
-      mix-blend-mode:overlay;
-      z-index:1;
-    }
-    .heroCanvas::after{
-      content:"";
-      position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(255,79,163,.06) 0%, rgba(0,0,0,.12) 55%, rgba(0,0,0,.40) 100%);
-      pointer-events:none;
-      z-index:2;
-    }
+    .heroSlide.is-active{opacity:1}
+    .heroCanvas:hover .heroSlide.is-active{transform:scale(1.06)}
 
     .heroOverlay{
-      position:absolute;
-      inset:0;
+      position:absolute; inset:0;
       padding:28px;
       display:flex;
       flex-direction:column;
       justify-content:flex-end;
-      z-index:3;
+      color:white;
+      background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.45) 100%);
     }
 
     .pill{
       display:inline-flex;
-      align-items:center;
       gap:8px;
       padding:9px 12px;
       border-radius:999px;
       background:rgba(255,255,255,.82);
-      border:1px solid rgba(255,79,163,.22);
+      color:#1a1020;
       font-size:13px;
-      color:rgba(26,16,32,.72);
       width:fit-content;
-      box-shadow:0 12px 28px rgba(255,79,163,.10);
-    }
-    .pillIcon{
-      width:18px;height:18px;
-      display:inline-grid;
-      place-items:center;
-      border-radius:999px;
-      background:rgba(255,79,163,.14);
-      border:1px solid rgba(255,79,163,.22);
-      color:rgba(26,16,32,.72);
-      font-size:12px;
-      line-height:1;
+      margin-bottom:10px;
     }
 
-    /* Remove “Showreel energy...” title entirely */
-    .heroMeta{
-      font-size:15px;
-      color:rgba(255,255,255,.85);
-      max-width:72ch;
-      margin:14px 0 0 0;
-    }
-
+    /* CONTROLS */
     .heroControls{
-      margin-top:14px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:12px;
+      align-items:center;
+      margin-top:12px;
     }
-    .dots{ display:flex; gap:8px; align-items:center; }
+    .dots{display:flex;gap:8px}
     .dotBtn{
       width:9px;height:9px;border-radius:50%;
-      border:1px solid rgba(255,255,255,.55);
-      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.6);
+      background:rgba(255,255,255,.2);
       cursor:pointer;
-      padding:0;
-      transition:transform .18s ease, background .18s ease;
     }
-    .dotBtn:hover{ transform:scale(1.12); }
-    .dotBtn.is-active{
-      background:rgba(255,255,255,.85);
-      border-color:rgba(255,255,255,.85);
-    }
+    .dotBtn.is-active{background:white}
 
-    .controlsRight{ display:flex; gap:10px; align-items:center; }
     .iconBtn{
-      width:36px;height:36px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.35);
-      background:rgba(255,255,255,.18);
-      color:#fff;
+      width:34px;height:34px;
+      border-radius:50%;
+      background:rgba(255,255,255,.2);
+      border:1px solid rgba(255,255,255,.4);
+      color:white;
       cursor:pointer;
-      display:grid;
-      place-items:center;
-      transition:transform .18s ease, background .18s ease, border-color .18s ease;
-      backdrop-filter: blur(10px);
     }
-    .iconBtn:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.26);
-      border-color:rgba(255,255,255,.55);
-    }
-    .iconBtn:active{ transform:translateY(0px); }
 
+    /* QUICK SECTION */
+    .quickRow{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr;
+      gap:14px;
+    }
+    .quickCard{
+      background:white;
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:0 10px 26px rgba(255,79,163,.08);
+    }
+    .quickTitle{font-weight:750;margin-bottom:10px}
+    .pillBtn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,79,163,.22);
+      margin:4px 6px 0 0;
+    }
+
+    /* WORK */
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
       gap:14px;
       margin-top:26px;
     }
     .card{
-      border:1px solid rgba(255,79,163,.16);
-      border-radius:var(--radius);
+      background:white;
       padding:18px;
-      background:rgba(255,255,255,.86);
+      border-radius:var(--radius);
       box-shadow:0 10px 26px rgba(255,79,163,.08);
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
-    .card:hover{
-      transform:translateY(-5px);
-      box-shadow:0 16px 36px rgba(255,79,163,.16);
-      border-color:rgba(255,79,163,.28);
-    }
-    .card strong{display:block;margin-bottom:6px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
 
-    .reveal{
-      opacity:0;
-      transform:translateY(14px);
-      transition:opacity .7s ease, transform .7s ease;
-    }
-    .reveal.is-visible{ opacity:1; transform:none; }
-
-    .pageFade{
-      opacity:0;
-      transform:translateY(10px);
-      animation:pageIn .9s ease forwards;
-    }
-    @keyframes pageIn{ to{opacity:1; transform:translateY(0)} }
-
-    @media (prefers-reduced-motion: reduce){
-      .heroCanvas,.reveal,.pageFade{transition:none;transform:none;animation:none;opacity:1}
-      .heroSlide{transition:none}
+    @media(max-width:860px){
+      .quickRow{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="nav">
-      <a class="brand" href="index.html">
-        <span class="brandDot" aria-hidden="true"></span>
-        Fatama
-      </a>
-      <nav class="links">
-        <a href="work.html">Work</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <div class="wrap section pageFade">
-    <div class="eyebrow">Portfolio</div>
-    <h1 class="titleGlow">Video. Motion. Design.</h1>
-    <p class="sub">
-      Video editing, photography, audio, and graphic design including logos. Flexible across software, with a preference for After Effects and Premiere Pro.
-    </p>
+<header>
+  <div class="nav">
+    <div class="brand"><span class="brandDot"></span>Fatama</div>
+    <nav class="links">
+      <a href="work.html">Work</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </div>
+</header>
 
-  <section class="heroStage">
-    <div class="heroSticky">
-      <div class="heroCanvas" id="heroCanvas">
+<div class="wrap section">
+  <div class="eyebrow">Portfolio</div>
+  <h1 class="titleGlow">Video. Motion. Design.</h1>
+  <p class="sub">Video editing, photography, audio, and graphic design with a focus on clean storytelling.</p>
+</div>
 
-        <!-- Slideshow images (in Photos/) -->
-        <img class="heroSlide is-active" src="Photos/P1.JPG" alt="Photo P1" />
-        <img class="heroSlide" src="Photos/P2.JPG" alt="Photo P2" />
-        <img class="heroSlide" src="Photos/P3.JPG" alt="Photo P3" />
-        <img class="heroSlide" src="Photos/P4.JPG" alt="Photo P4" />
-        <img class="heroSlide" src="Photos/P5.JPG" alt="Photo P5" />
-        <img class="heroSlide" src="Photos/P6.JPG" alt="Photo P6" />
-        <img class="heroSlide" src="Photos/P7.JPG" alt="Photo P7" />
-        <img class="heroSlide" src="Photos/P8.JPG" alt="Photo P8" />
+<section class="heroStage">
+  <div class="heroSticky">
+    <div class="heroCanvas" id="heroCanvas">
+      <img class="heroSlide is-active" src="Photos/P1.JPG">
+      <img class="heroSlide" src="Photos/P2.JPG">
+      <img class="heroSlide" src="Photos/P3.JPG">
+      <img class="heroSlide" src="Photos/P4.JPG">
+      <img class="heroSlide" src="Photos/P5.JPG">
+      <img class="heroSlide" src="Photos/P6.JPG">
+      <img class="heroSlide" src="Photos/P7.JPG">
+      <img class="heroSlide" src="Photos/P8.JPG">
 
-        <div class="heroOverlay">
-          <div class="pill">
-            <span class="pillIcon">📷</span>
-            photos taken by me <span aria-hidden="true">✿</span>
-          </div>
-
-          <p class="heroMeta">
-            Tap the cute buttons to flip through my photos ♡
-          </p>
-
-          <div class="heroControls" aria-label="Slideshow controls">
-            <div class="dots" id="dots"></div>
-
-            <div class="controlsRight">
-              <button class="iconBtn" id="prevBtn" aria-label="Previous photo">‹</button>
-              <button class="iconBtn" id="playBtn" aria-label="Play slideshow">▶</button>
-              <button class="iconBtn" id="nextBtn" aria-label="Next photo">›</button>
-            </div>
+      <div class="heroOverlay">
+        <div class="pill">📷 photos taken by me ✿</div>
+        <div class="heroControls">
+          <div class="dots" id="dots"></div>
+          <div>
+            <button class="iconBtn" id="prev">‹</button>
+            <button class="iconBtn" id="next">›</button>
           </div>
         </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="wrap section">
-    <div class="eyebrow reveal">Work</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">Featured projects</h1>
-    <div class="grid">
-      <div class="card reveal">
-        <strong>Short-form Reels</strong>
-        <p>Fast pacing, clean captions, punchy transitions.</p>
-      </div>
-      <div class="card reveal">
-        <strong>YouTube Editing</strong>
-        <p>Structure, rhythm, retention, and packaging.</p>
-      </div>
-      <div class="card reveal">
-        <strong>Motion Graphics</strong>
-        <p>After Effects titles, logos, and animated elements.</p>
-      </div>
-      <div class="card reveal">
-        <strong>Photography</strong>
-        <p>Shoot and edit for mood, color, and clarity.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="wrap section">
-    <div class="eyebrow reveal">About</div>
-    <h1 class="reveal" style="font-size:clamp(28px,4.2vw,44px)">A little about me</h1>
-    <p class="sub reveal">
-      I’m a media studies student focused on video editing and creative production, with experience in photography, audio, and graphic design.
-    </p>
+<div class="wrap section">
+  <div class="quickRow">
+    <div class="quickCard">
+      <div class="quickTitle">Quick links</div>
+      <a class="pillBtn" href="work.html">🎬 Work</a>
+      <a class="pillBtn" href="about.html">💗 About</a>
+      <a class="pillBtn" href="contact.html">✉️ Contact</a>
+    </div>
+    <div class="quickCard">
+      <div class="quickTitle">Services</div>
+      <p>Reels • YouTube • Motion • Photo</p>
+    </div>
+    <div class="quickCard">
+      <div class="quickTitle">Tools</div>
+      <p>After Effects • Premiere Pro</p>
+    </div>
   </div>
+</div>
 
-  <script>
-    // Scroll motion for hero
-    const hero = document.getElementById("heroCanvas");
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+<div class="wrap section">
+  <div class="eyebrow">Work</div>
+  <h1>Featured projects</h1>
+  <div class="grid">
+    <div class="card"><strong>Short-form Reels</strong><p>Fast, clean edits</p></div>
+    <div class="card"><strong>YouTube Editing</strong><p>Structure & pacing</p></div>
+    <div class="card"><strong>Motion Graphics</strong><p>Titles & animation</p></div>
+    <div class="card"><strong>Photography</strong><p>Mood & color</p></div>
+  </div>
+</div>
 
-    function clamp(v,min,max){return Math.min(max,Math.max(min,v));}
+<script>
+  const slides=document.querySelectorAll('.heroSlide');
+  const dots=document.getElementById('dots');
+  let i=0;
+  slides.forEach((_,idx)=>{
+    const b=document.createElement('button');
+    b.className='dotBtn'+(idx===0?' is-active':'');
+    b.onclick=()=>show(idx);
+    dots.appendChild(b);
+  });
+  function show(n){
+    slides[i].classList.remove('is-active');
+    dots.children[i].classList.remove('is-active');
+    i=(n+slides.length)%slides.length;
+    slides[i].classList.add('is-active');
+    dots.children[i].classList.add('is-active');
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+</script>
 
-    function onScroll(){
-      if(reduce) return;
-      const stage = hero.closest(".heroStage");
-      const r = stage.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = r.height - vh;
-      const sc = clamp(-r.top, 0, total);
-      const t = total > 0 ? sc / total : 0;
-
-      hero.style.setProperty("--scale",(1 + .06*t).toFixed(4));
-      hero.style.setProperty("--ty",(18*(1-t)).toFixed(2) + "px");
-      hero.style.setProperty("--blur",(7*t).toFixed(2) + "px");
-      hero.style.setProperty("--op",(1 - .18*t).toFixed(3));
-    }
-
-    // Reveal animation
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => e.isIntersecting && e.target.classList.add("is-visible"));
-    }, { threshold: .12 });
-
-    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
-    window.addEventListener("scroll", onScroll, { passive:true });
-    onScroll();
-
-    // Slideshow
-    const slides = Array.from(document.querySelectorAll(".heroSlide"));
-    const dotsWrap = document.getElementById("dots");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const playBtn = document.getElementById("playBtn");
-
-    let idx = 0;
-    let playing = true;
-    let timer = null;
-
-    function setActive(i){
-      idx = (i + slides.length) % slides.length;
-      slides.forEach((s, k) => s.classList.toggle("is-active", k === idx));
-      Array.from(dotsWrap.children).forEach((d, k) => d.classList.toggle("is-active", k === idx));
-    }
-
-    slides.forEach((_, i) => {
-      const b = document.createElement("button");
-      b.className = "dotBtn" + (i === 0 ? " is-active" : "");
-      b.type = "button";
-      b.setAttribute("aria-label", "Go to photo " + (i+1));
-      b.addEventListener("click", () => { setActive(i); restart(); });
-      dotsWrap.appendChild(b);
-    });
-
-    function next(){ setActive(idx + 1); }
-    function prev(){ setActive(idx - 1); }
-
-    prevBtn.addEventListener("click", () => { prev(); restart(); });
-    nextBtn.addEventListener("click", () => { next(); restart(); });
-
-    function play(){
-      playing = true;
-      playBtn.textContent = "❚❚";
-      clearInterval(timer);
-      timer = setInterval(next, 2600);
-    }
-    function pause(){
-      playing = false;
-      playBtn.textContent = "▶";
-      clearInterval(timer);
-    }
-    function togglePlay(){ playing ? pause() : play(); }
-    function restart(){
-      if(playing){
-        clearInterval(timer);
-        timer = setInterval(next, 2600);
-      }
-    }
-    playBtn.addEventListener("click", togglePlay);
-
-    if(!reduce){ play(); } else { pause(); }
-  </script>
 </body>
 </html>
