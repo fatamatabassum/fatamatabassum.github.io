@@ -14,71 +14,18 @@
       --radius:22px;
       --max:1100px;
       --pink:#ff4fa3;
-      --shadow:0 16px 46px rgba(255,79,163,.14);
       --shadowSoft:0 12px 30px rgba(255,79,163,.10);
       --border:rgba(255,79,163,.18);
     }
-/* subtle gradient shimmer text */
-.sparkleText{
-  background: linear-gradient(90deg,
-    rgba(255,79,163,.95),
-    rgba(255,127,197,.95),
-    rgba(255,255,255,.92),
-    rgba(255,127,197,.95),
-    rgba(255,79,163,.95)
-  );
-  background-size: 260% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 4.8s ease-in-out infinite;
-}
-
-@keyframes shimmer{
-  0%{ background-position: 0% 50%; }
-  50%{ background-position: 100% 50%; }
-  100%{ background-position: 0% 50%; }
-}
-
-/* tiny twinkle sparkles (very subtle) */
-.sparkleWrap{
-  position: relative;
-  isolation: isolate;
-}
-.sparkleWrap::after{
-  content:"";
-  position:absolute;
-  inset:-18px -10px;
-  pointer-events:none;
-  z-index:-1;
-  opacity:.55;
-  background:
-    radial-gradient(6px 6px at 14% 28%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 70%),
-    radial-gradient(5px 5px at 28% 58%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
-    radial-gradient(7px 7px at 62% 24%, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 70%),
-    radial-gradient(5px 5px at 82% 52%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
-    radial-gradient(6px 6px at 90% 18%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 70%);
-  filter: blur(.2px);
-  animation: twinkle 3.6s ease-in-out infinite;
-}
-
-@keyframes twinkle{
-  0%,100%{ transform: translateY(0px); opacity:.45; }
-  50%{ transform: translateY(-3px); opacity:.70; }
-}
-
-/* respect reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .sparkleText{ animation:none; }
-  .sparkleWrap::after{ animation:none; }
-}
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
+    html{scroll-behavior:smooth}
 
     body{
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
+      overscroll-behavior-y:none;
       background:
         radial-gradient(900px 500px at 12% 10%, rgba(255,127,197,.28) 0%, rgba(255,127,197,0) 58%),
         radial-gradient(850px 520px at 88% 18%, rgba(255,79,163,.20) 0%, rgba(255,79,163,0) 60%),
@@ -102,6 +49,7 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
+      gap:12px;
     }
     .brand{
       font-weight:800;
@@ -126,17 +74,18 @@
       transform:translateY(-1px);
       background:rgba(255,79,163,.22);
     }
-
-    .links{display:flex;gap:14px}
+    .links{display:flex;gap:14px;align-items:center}
     .links a{
       font-size:14px;
       color:var(--muted);
       padding:8px 10px;
       border-radius:999px;
+      transition:transform .18s ease, background .18s ease, color .18s ease;
     }
     .links a:hover{
       background:rgba(255,79,163,.14);
       color:var(--text);
+      transform:translateY(-1px);
     }
 
     /* LAYOUT */
@@ -148,6 +97,15 @@
       color:var(--pink);
       letter-spacing:.1em;
       text-transform:uppercase;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .eyebrow::after{
+      content:"";
+      width:46px;height:1px;
+      background:linear-gradient(90deg, rgba(255,79,163,.65), rgba(255,79,163,0));
+      border-radius:999px;
     }
 
     h1{
@@ -158,7 +116,6 @@
     }
 
     .titleGlow{
-      color:var(--pink);
       text-shadow:
         0 12px 0 rgba(255,79,163,.10),
         0 24px 26px rgba(255,79,163,.18),
@@ -169,7 +126,7 @@
       font-size:clamp(16px,2.2vw,19px);
       color:var(--muted);
       max-width:68ch;
-      margin:0 0 18px 0;
+      margin:0;
     }
 
     /* OPTION B — typing line */
@@ -183,6 +140,50 @@
     @keyframes typing{ from{ width:0 } to{ width:100% } }
     @keyframes blink{ 50%{ border-color:transparent } }
 
+    /* subtle gradient shimmer text */
+    .sparkleText{
+      background: linear-gradient(90deg,
+        rgba(255,79,163,.95),
+        rgba(255,127,197,.95),
+        rgba(255,255,255,.92),
+        rgba(255,127,197,.95),
+        rgba(255,79,163,.95)
+      );
+      background-size: 260% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 4.8s ease-in-out infinite;
+    }
+    @keyframes shimmer{
+      0%{ background-position: 0% 50%; }
+      50%{ background-position: 100% 50%; }
+      100%{ background-position: 0% 50%; }
+    }
+
+    /* tiny twinkle sparkles */
+    .sparkleWrap{ position:relative; isolation:isolate; }
+    .sparkleWrap::after{
+      content:"";
+      position:absolute;
+      inset:-18px -10px;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.55;
+      background:
+        radial-gradient(6px 6px at 14% 28%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(5px 5px at 28% 58%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(7px 7px at 62% 24%, rgba(255,255,255,.75) 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(5px 5px at 82% 52%, rgba(255,255,255,.7) 0%, rgba(255,255,255,0) 70%),
+        radial-gradient(6px 6px at 90% 18%, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 70%);
+      filter: blur(.2px);
+      animation: twinkle 3.6s ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%,100%{ transform: translateY(0px); opacity:.45; }
+      50%{ transform: translateY(-3px); opacity:.70; }
+    }
+
     /* STATUS */
     .statusRow{margin-top:26px}
     .statusPill{
@@ -195,10 +196,12 @@
       border:1px solid rgba(255,79,163,.18);
       box-shadow:0 12px 26px rgba(255,79,163,.10);
       font-size:14px;
+      color:rgba(26,16,32,.80);
     }
     .pulseDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--pink);
+      box-shadow:0 0 0 0 rgba(255,79,163,.35);
       animation:pulse 1.6s ease-in-out infinite;
     }
     @keyframes pulse{
@@ -207,7 +210,7 @@
       100%{box-shadow:0 0 0 0 rgba(255,79,163,0)}
     }
 
-    /* OPTION A — reveal + motion */
+    /* REVEAL (Option A) */
     .reveal{
       opacity:0;
       transform:translateY(14px);
@@ -215,6 +218,7 @@
     }
     .reveal.is-visible{opacity:1;transform:none}
 
+    /* page fade */
     .pageFade{
       opacity:0;
       transform:translateY(10px);
@@ -222,6 +226,33 @@
     }
     @keyframes pageIn{to{opacity:1;transform:translateY(0)}}
 
+    /* flowy sections */
+    .flowSection{
+      margin-top:22px;
+      padding:18px 18px;
+      border-radius:26px;
+      background:rgba(255,255,255,.55);
+      border:1px solid rgba(255,79,163,.12);
+      box-shadow:0 10px 22px rgba(255,79,163,.06);
+    }
+
+    .flowy{
+      transform: translateY(var(--fy, 0px));
+      transition: transform .15s linear;
+      will-change: transform;
+    }
+
+    /* bouncy entry (tiny spring) */
+    .reveal.is-visible{
+      animation: popIn .55s cubic-bezier(.22, 1.15, .32, 1) both;
+    }
+    @keyframes popIn{
+      0%{ transform:translateY(14px) scale(.985); }
+      60%{ transform:translateY(-2px) scale(1.01); }
+      100%{ transform:translateY(0) scale(1); }
+    }
+
+    /* grid cards */
     .grid{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -235,11 +266,14 @@
       border:1px solid rgba(255,79,163,.16);
       box-shadow:0 10px 26px rgba(255,79,163,.08);
       transition:transform .18s ease, box-shadow .18s ease;
+      will-change:transform;
     }
     .card:hover{
       transform:translateY(-6px) rotate(-0.2deg);
       box-shadow:0 18px 42px rgba(255,79,163,.16);
     }
+    .card strong{display:block;margin-bottom:6px;font-size:15px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
 
     .footerNote{
       text-align:center;
@@ -250,12 +284,15 @@
     }
 
     @media (prefers-reduced-motion: reduce){
-      .reveal,.pageFade,.typeLine{
-        animation:none;
+      html{scroll-behavior:auto}
+      .reveal,.pageFade,.typeLine,.sparkleText,.flowy{
+        animation:none !important;
         opacity:1;
-        transform:none;
+        transform:none !important;
+        transition:none !important;
         border-right:none;
       }
+      .sparkleWrap::after{ animation:none !important; }
     }
   </style>
 </head>
@@ -265,7 +302,7 @@
 <header>
   <div class="nav">
     <a class="brand" href="index.html">
-      <span class="homeIcon">⌂</span>
+      <span class="homeIcon" aria-hidden="true">⌂</span>
       Fatama
     </a>
     <nav class="links">
@@ -277,32 +314,41 @@
 </header>
 
 <div class="wrap section pageFade">
-  <div class="eyebrow reveal">About</div>
-  <h1 class="titleGlow reveal">Hi, I’m Fatama ✿</h1>
+  <div class="eyebrow reveal flowy">About</div>
 
-  <p class="sub reveal">
-    <span class="typeLine">video-first creator ✿ edits, photos, motion.</span>
-  </p>
+  <h1 class="titleGlow sparkleWrap reveal flowy">
+    <span class="sparkleText">Hi, I’m Fatama ✿</span>
+  </h1>
 
-  <p class="sub reveal">
-    I’m a media studies student and visual creator with a strong focus on video-based work.
-    I work across video editing, photography, audio, and graphic design, and I love creating
-    visuals that feel expressive and playful.
-  </p>
+  <div class="flowSection reveal flowy">
+    <p class="sub" style="margin:0;">
+      <span class="typeLine sparkleText">video-first creator ✿ edits, photos, motion.</span>
+    </p>
+  </div>
 
-  <p class="sub reveal">
-    Most of my work lives in short-form edits, motion, and photography.
-    I enjoy experimenting with color, rhythm, and mood through visuals.
-  </p>
+  <div class="flowSection reveal flowy">
+    <p class="sub" style="margin:0;">
+      I’m a media studies student and visual creator with a strong focus on video-based work.
+      I work across video editing, photography, audio, and graphic design, and I love creating
+      visuals that feel expressive and playful.
+    </p>
+  </div>
 
-  <div class="statusRow reveal">
+  <div class="flowSection reveal flowy">
+    <p class="sub" style="margin:0;">
+      Most of my work lives in short-form edits, motion, and photography.
+      I enjoy experimenting with color, rhythm, and mood through visuals.
+    </p>
+  </div>
+
+  <div class="statusRow reveal flowy">
     <div class="statusPill">
-      <span class="pulseDot"></span>
+      <span class="pulseDot" aria-hidden="true"></span>
       open to projects & collaborations ✿
     </div>
   </div>
 
-  <div class="grid reveal">
+  <div class="grid reveal flowy">
     <div class="card">
       <strong>Video Editing</strong>
       <p>Short-form edits, pacing, transitions, captions.</p>
@@ -321,7 +367,7 @@
     </div>
   </div>
 
-  <div class="footerNote reveal">
+  <div class="footerNote reveal flowy">
     thanks for stopping by ♡
   </div>
 </div>
@@ -329,6 +375,7 @@
 <script>
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // reveal on scroll
   if(!reduce){
     const io = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
@@ -339,6 +386,26 @@
     document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
   } else {
     document.querySelectorAll(".reveal").forEach(el=>el.classList.add("is-visible"));
+  }
+
+  // flowy scroll (subtle float)
+  if(!reduce){
+    const flowEls = document.querySelectorAll(".flowy");
+    function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
+
+    function onScrollFlow(){
+      const vh = window.innerHeight;
+      flowEls.forEach(el=>{
+        const r = el.getBoundingClientRect();
+        const mid = r.top + r.height/2;
+        const t = (mid - vh/2) / vh;      // -1 to 1-ish
+        const y = clamp(t * 10, -10, 10); // subtle float
+        el.style.setProperty("--fy", y.toFixed(2) + "px");
+      });
+    }
+
+    window.addEventListener("scroll", onScrollFlow, { passive:true });
+    onScrollFlow();
   }
 </script>
 
