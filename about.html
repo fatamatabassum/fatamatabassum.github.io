@@ -302,7 +302,7 @@
       justify-content:center;
       align-items:center;
       text-align:center;
-      padding:42px 18px;
+      padding:22px 22px;
       position:relative;
       z-index:1;
     }
@@ -468,7 +468,7 @@
     // Smooth blur for past bubbles: NO class toggling (prevents choppy)
     function updatePastBlur(){
       const vh = window.innerHeight;
-      const start = vh * 0.30; // start blurring when bubble goes above this
+      const start = vh * 0.10; // start blurring when bubble goes above this
       const end   = vh * 0.05; // max blur when bubble is near very top
 
       bubbles.forEach(b=>{
