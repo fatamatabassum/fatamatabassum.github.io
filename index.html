@@ -7,22 +7,22 @@
 
   <style>
     :root{
-      --text:#0f1f1c;
-      --muted:rgba(15,31,28,.62);
+      --text:#1a1020;
+      --muted:rgba(26,16,32,.62);
 
-      --bg1:#f0fffb;
-      --bg2:#f6fffc;
+      --bg1:#f2fffb;
+      --bg2:#f8fffd;
 
       --radius:22px;
       --max:1100px;
 
-      --mint:#6ee7c8;
-      --mint2:#9ff3dc;
-      --mint3:#d7fff5;
+      --mint:#8ee7d1;
+      --mint2:#b8f3e6;
+      --mint3:#dcfff7;
 
-      --shadow:0 16px 46px rgba(110,231,200,.14);
-      --shadowSoft:0 12px 30px rgba(110,231,200,.10);
-      --border:rgba(110,231,200,.18);
+      --shadow:0 16px 46px rgba(142,231,209,.14);
+      --shadowSoft:0 12px 30px rgba(142,231,209,.10);
+      --border:rgba(142,231,209,.18);
     }
 
     *{box-sizing:border-box}
@@ -32,21 +32,21 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 500px at 10% 12%, rgba(159,243,220,.28) 0%, rgba(159,243,220,0) 58%),
-        radial-gradient(850px 520px at 92% 18%, rgba(110,231,200,.20) 0%, rgba(110,231,200,0) 60%),
-        radial-gradient(900px 540px at 40% 105%, rgba(215,255,245,.32) 0%, rgba(215,255,245,0) 55%),
+        radial-gradient(900px 500px at 10% 12%, rgba(184,243,230,.28) 0%, rgba(184,243,230,0) 58%),
+        radial-gradient(850px 520px at 92% 18%, rgba(142,231,209,.20) 0%, rgba(142,231,209,0) 60%),
+        radial-gradient(900px 540px at 40% 105%, rgba(220,255,247,.32) 0%, rgba(220,255,247,0) 55%),
         linear-gradient(180deg, var(--bg1) 0%, #ffffff 55%, var(--bg2) 100%);
     }
 
     a{color:inherit;text-decoration:none}
 
+    /* NAV */
     header{
       position:sticky; top:0; z-index:50;
       backdrop-filter:saturate(180%) blur(16px);
-      background:rgba(240,255,251,.72);
+      background:rgba(242,255,251,.72);
       border-bottom:1px solid var(--border);
     }
-
     .nav{
       max-width:var(--max);
       margin:0 auto;
@@ -56,34 +56,33 @@
       align-items:center;
       gap:12px;
     }
-
     .brand{
       font-weight:800;
       display:flex;
       gap:10px;
       align-items:center;
+      letter-spacing:-.02em;
     }
-
     .brandDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--mint);
-      box-shadow:0 0 0 6px rgba(110,231,200,.12);
+      box-shadow:0 0 0 6px rgba(142,231,209,.12);
     }
-
     .links{display:flex;gap:14px;align-items:center}
     .links a{
       font-size:14px;
       color:var(--muted);
       padding:8px 10px;
       border-radius:999px;
-      transition:.2s;
+      transition:transform .18s ease, background .18s ease, color .18s ease;
     }
     .links a:hover{
-      background:rgba(110,231,200,.14);
+      background:rgba(142,231,209,.14);
       color:var(--text);
       transform:translateY(-1px);
     }
 
+    /* LAYOUT */
     .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
     .section{padding:72px 0}
 
@@ -96,6 +95,12 @@
       align-items:center;
       gap:8px;
     }
+    .eyebrow::after{
+      content:"";
+      width:46px;height:1px;
+      background:linear-gradient(90deg, rgba(142,231,209,.65), rgba(142,231,209,0));
+      border-radius:999px;
+    }
 
     h1{
       font-size:clamp(40px,6vw,72px);
@@ -107,9 +112,9 @@
     .titleGlow{
       color:var(--mint);
       text-shadow:
-        0 12px 0 rgba(110,231,200,.10),
-        0 24px 26px rgba(110,231,200,.18),
-        0 10px 40px rgba(110,231,200,.10);
+        0 12px 0 rgba(142,231,209,.10),
+        0 24px 26px rgba(142,231,209,.18),
+        0 10px 40px rgba(142,231,209,.10);
     }
 
     .sub{
@@ -119,6 +124,7 @@
       margin:0;
     }
 
+    /* CUTE “OPEN” BADGE */
     .statusRow{
       margin-top:14px;
       display:flex;
@@ -126,7 +132,6 @@
       align-items:center;
       flex-wrap:wrap;
     }
-
     .statusPill{
       display:inline-flex;
       align-items:center;
@@ -134,32 +139,204 @@
       padding:10px 14px;
       border-radius:999px;
       background:rgba(255,255,255,.88);
-      border:1px solid var(--border);
-      box-shadow:var(--shadowSoft);
+      border:1px solid rgba(142,231,209,.18);
+      box-shadow:0 12px 26px rgba(142,231,209,.10);
+      color:rgba(26,16,32,.80);
       font-size:14px;
+      width:fit-content;
     }
-
     .pulseDot{
       width:10px;height:10px;border-radius:50%;
       background:var(--mint);
-      animation:pulse 1.6s infinite;
+      box-shadow:0 0 0 0 rgba(142,231,209,.35);
+      animation:pulse 1.6s ease-in-out infinite;
     }
-
     @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(110,231,200,.35)}
-      70%{box-shadow:0 0 0 10px rgba(110,231,200,0)}
-      100%{box-shadow:0 0 0 0 rgba(110,231,200,0)}
+      0%{box-shadow:0 0 0 0 rgba(142,231,209,.35)}
+      70%{box-shadow:0 0 0 10px rgba(142,231,209,0)}
+      100%{box-shadow:0 0 0 0 rgba(142,231,209,0)}
     }
 
+    /* HERO */
+    .heroStage{height:180vh}
+    .heroSticky{
+      position:sticky;
+      top:56px;
+      height:calc(100vh - 56px);
+      display:grid;
+      place-items:center;
+    }
+
+    .heroCanvas{
+      width:min(980px,92vw);
+      height:min(560px,60vh);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      position:relative;
+      transform:translateZ(0);
+      -webkit-mask-image:-webkit-radial-gradient(white, black);
+    }
+
+    .heroSlide{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      opacity:0;
+      transition:opacity .6s ease, transform 1.2s ease;
+      transform:scale(1.02);
+    }
+    .heroSlide.is-active{opacity:1}
+    .heroCanvas:hover .heroSlide.is-active{transform:scale(1.06)}
+
+    .heroCanvas::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(7px 7px at 18% 24%, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(6px 6px at 32% 62%, rgba(255,255,255,.48) 0%, rgba(255,255,255,0) 65%),
+        radial-gradient(8px 8px at 68% 30%, rgba(255,255,255,.42) 0%, rgba(255,255,255,0) 62%),
+        radial-gradient(6px 6px at 84% 66%, rgba(255,255,255,.46) 0%, rgba(255,255,255,0) 65%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
+      opacity:.9;
+      pointer-events:none;
+      mix-blend-mode:overlay;
+      z-index:1;
+    }
+
+    .heroOverlay{
+      position:absolute; inset:0;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      color:white;
+      z-index:2;
+      background:
+        linear-gradient(180deg, rgba(142,231,209,.05) 0%, rgba(0,0,0,.10) 55%, rgba(0,0,0,.45) 100%);
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      padding:9px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.84);
+      color:#1a1020;
+      font-size:13px;
+      width:fit-content;
+      box-shadow:var(--shadowSoft);
+      border:1px solid rgba(142,231,209,.16);
+      margin-bottom:10px;
+    }
+
+    .heroControls{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:12px;
+      gap:12px;
+    }
+    .dots{display:flex;gap:8px}
+    .dotBtn{
+      width:9px;height:9px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.65);
+      background:rgba(255,255,255,.22);
+      cursor:pointer;
+      transition:transform .15s ease;
+    }
+    .dotBtn:hover{transform:scale(1.12)}
+    .dotBtn.is-active{background:white}
+
+    .btnRow{display:flex;gap:10px}
+    .iconBtn{
+      width:36px;height:36px;
+      border-radius:999px;
+      background:rgba(255,255,255,.20);
+      border:1px solid rgba(255,255,255,.42);
+      color:white;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:transform .15s ease, background .15s ease;
+      backdrop-filter: blur(10px);
+    }
+    .iconBtn:hover{
+      background:rgba(255,255,255,.28);
+      transform:translateY(-1px);
+    }
+
+    /* QUICK SECTION */
+    .quickRow{
+      display:grid;
+      grid-template-columns:1.2fr 1fr 1fr;
+      gap:14px;
+    }
+    .quickCard{
+      background:rgba(255,255,255,.90);
+      border-radius:var(--radius);
+      padding:18px;
+      border:1px solid rgba(142,231,209,.16);
+      box-shadow:0 10px 26px rgba(142,231,209,.08);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .quickCard:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 36px rgba(142,231,209,.14);
+    }
+    .quickTitle{
+      font-weight:800;
+      margin-bottom:10px;
+      letter-spacing:-.01em;
+    }
+    .pillBtn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(142,231,209,.22);
+      margin:4px 8px 0 0;
+      background:rgba(255,255,255,.92);
+      box-shadow:0 10px 22px rgba(142,231,209,.10);
+      transition:transform .15s ease, background .15s ease;
+    }
+    .pillBtn:hover{
+      transform:translateY(-2px);
+      background:rgba(142,231,209,.10);
+    }
+    .tiny{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    /* WORK */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:14px;
+      margin-top:26px;
+    }
     .card{
       background:rgba(255,255,255,.90);
       padding:18px;
       border-radius:var(--radius);
-      border:1px solid var(--border);
-      box-shadow:var(--shadowSoft);
-      margin-top:14px;
+      border:1px solid rgba(142,231,209,.16);
+      box-shadow:0 10px 26px rgba(142,231,209,.08);
+      transition:transform .18s ease, box-shadow .18s ease;
     }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 36px rgba(142,231,209,.14);
+    }
+    .card strong{display:block;margin-bottom:6px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
 
+    @media(max-width:860px){
+      .quickRow{grid-template-columns:1fr}
+    }
   </style>
 </head>
 
@@ -182,10 +359,63 @@
 
   <p class="sub">Video editing, photography, audio, and graphic design — bringing ideas to life through visuals.</p>
 
+  <!-- NEW BADGE -->
   <div class="statusRow">
     <div class="statusPill">
-      <span class="pulseDot"></span>
+      <span class="pulseDot" aria-hidden="true"></span>
       currently open for projects
+    </div>
+  </div>
+</div>
+
+<section class="heroStage">
+  <div class="heroSticky">
+    <div class="heroCanvas" id="heroCanvas">
+      <img class="heroSlide is-active" src="Photos/P1.JPG" alt="Photo P1">
+      <img class="heroSlide" src="Photos/P2.JPG" alt="Photo P2">
+      <img class="heroSlide" src="Photos/P3.JPG" alt="Photo P3">
+      <img class="heroSlide" src="Photos/P4.JPG" alt="Photo P4">
+      <img class="heroSlide" src="Photos/P5.JPG" alt="Photo P5">
+      <img class="heroSlide" src="Photos/P6.JPG" alt="Photo P6">
+      <img class="heroSlide" src="Photos/P7.JPG" alt="Photo P7">
+      <img class="heroSlide" src="Photos/P8.JPG" alt="Photo P8">
+
+      <div class="heroOverlay">
+        <div class="pill"> photos taken by me </div>
+
+        <div class="heroControls">
+          <div class="dots" id="dots"></div>
+          <div class="btnRow">
+            <button class="iconBtn" id="prev" aria-label="Previous photo">‹</button>
+            <button class="iconBtn" id="next" aria-label="Next photo">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="wrap section" style="padding-top:46px;padding-bottom:46px;">
+  <div class="quickRow">
+    <div class="quickCard">
+      <div class="quickTitle">Quick links</div>
+      <a class="pillBtn" href="work.html">🎬 Work</a>
+      <a class="pillBtn" href="about.html">💗 About</a>
+      <a class="pillBtn" href="contact.html">✉️ Contact</a>
+      <div class="tiny"> Here are some shortcuts ♡</div>
+    </div>
+
+    <div class="quickCard">
+      <div class="quickTitle">Services</div>
+      <p style="margin:0;color:var(--muted);">Reels • YouTube • Motion • Photo</p>
+      <div class="tiny">Open for work and new projects </div>
+    </div>
+
+    <div class="quickCard">
+      <div class="quickTitle">Tools</div>
+      <p style="margin:0;color:var(--muted);">After Effects • Premiere Pro</p>
+      <div class="tiny">Also: Photoshop + Lightroom</div>
     </div>
   </div>
 </div>
@@ -194,11 +424,38 @@
   <div class="eyebrow">Work</div>
   <h1>Featured projects</h1>
 
-  <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
-  <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
-  <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
-  <div class="card"><strong>Photography</strong><p>Color, mood, and composition.</p></div>
+  <div class="grid">
+    <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
+    <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
+    <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
+    <div class="card"><strong>Photography</strong><p>Color, mood, and composition.</p></div>
+  </div>
 </div>
+
+<script>
+  const slides = document.querySelectorAll('.heroSlide');
+  const dots = document.getElementById('dots');
+  let i = 0;
+
+  slides.forEach((_, idx) => {
+    const b = document.createElement('button');
+    b.className = 'dotBtn' + (idx === 0 ? ' is-active' : '');
+    b.setAttribute('aria-label', 'Go to photo ' + (idx + 1));
+    b.onclick = () => show(idx);
+    dots.appendChild(b);
+  });
+
+  function show(n){
+    slides[i].classList.remove('is-active');
+    dots.children[i].classList.remove('is-active');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('is-active');
+    dots.children[i].classList.add('is-active');
+  }
+
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.getElementById('prev').onclick = () => show(i - 1);
+</script>
 
 </body>
 </html>
