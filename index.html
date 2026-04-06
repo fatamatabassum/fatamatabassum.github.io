@@ -331,6 +331,9 @@
 .videoCard:hover video{
   transform:scale(1.03);
 }
+.videoCard:hover video{
+  transform:scale(1.03);
+}
       background:rgba(255,255,255,.90);
       padding:18px;
       border-radius:var(--radius);
@@ -436,12 +439,11 @@
   <div class="eyebrow">Work</div>
   <h1>Featured projects</h1>
 
-  <div class="grid">
-    <div class="card videoCard">
-  <video 
-    muted 
-    loop 
-    playsinline 
+ <div class="card videoCard">
+  <video
+    muted
+    loop
+    playsinline
     poster="Photos/caplugs-thumb.jpg"
     class="previewVideo"
   >
@@ -470,7 +472,20 @@
     b.onclick = () => show(idx);
     dots.appendChild(b);
   });
-  <script>
+
+  function show(n){
+    slides[i].classList.remove('is-active');
+    dots.children[i].classList.remove('is-active');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('is-active');
+    dots.children[i].classList.add('is-active');
+  }
+
+  document.getElementById('next').onclick = () => show(i + 1);
+  document.getElementById('prev').onclick = () => show(i - 1);
+</script>
+
+<script>
   const vids = document.querySelectorAll('.previewVideo');
 
   vids.forEach(video => {
