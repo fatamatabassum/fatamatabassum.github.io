@@ -320,6 +320,17 @@
       margin-top:26px;
     }
     .card{
+      .videoCard video{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:10px;
+  object-fit:cover;
+  transition:transform .3s ease;
+}
+
+.videoCard:hover video{
+  transform:scale(1.03);
+}
       background:rgba(255,255,255,.90);
       padding:18px;
       border-radius:var(--radius);
@@ -337,13 +348,7 @@
     @media(max-width:860px){
       .quickRow{grid-template-columns:1fr}
     }
-    <div class="card">
-  <video controls poster="Photos/caplugs-thumb.jpg" style="width:100%; border-radius:12px; margin-bottom:10px;">
-    <source src="Caplug.mp4" type="video/mp4">
-  </video>
-  <strong>Caplugs Motion Graphics</strong>
-  <p>Motion graphics created during my internship at Caplugs.</p>
-</div>
+
   </style>
 </head>
 
@@ -432,6 +437,20 @@
   <h1>Featured projects</h1>
 
   <div class="grid">
+    <div class="card videoCard">
+  <video 
+    muted 
+    loop 
+    playsinline 
+    poster="Photos/caplugs-thumb.jpg"
+    class="previewVideo"
+  >
+    <source src="Caplug.mp4" type="video/mp4">
+  </video>
+
+  <strong>Caplugs Motion Graphics</strong>
+  <p>Motion graphics created during my internship at Caplugs.</p>
+</div>
     <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
     <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
     <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
@@ -451,6 +470,20 @@
     b.onclick = () => show(idx);
     dots.appendChild(b);
   });
+  <script>
+  const vids = document.querySelectorAll('.previewVideo');
+
+  vids.forEach(video => {
+    video.parentElement.addEventListener('mouseenter', () => {
+      video.play();
+    });
+
+    video.parentElement.addEventListener('mouseleave', () => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  });
+</script>
 
   function show(n){
     slides[i].classList.remove('is-active');
