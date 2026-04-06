@@ -320,7 +320,15 @@
       margin-top:26px;
     }
     .card{
-      .videoCard video{
+  background:rgba(255,255,255,.90);
+  padding:18px;
+  border-radius:var(--radius);
+  border:1px solid rgba(142,231,209,.16);
+  box-shadow:0 10px 26px rgba(142,231,209,.08);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.videoCard video{
   width:100%;
   border-radius:12px;
   margin-bottom:10px;
@@ -331,16 +339,7 @@
 .videoCard:hover video{
   transform:scale(1.03);
 }
-.videoCard:hover video{
-  transform:scale(1.03);
-}
-      background:rgba(255,255,255,.90);
-      padding:18px;
-      border-radius:var(--radius);
-      border:1px solid rgba(142,231,209,.16);
-      box-shadow:0 10px 26px rgba(142,231,209,.08);
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
+  
     .card:hover{
       transform:translateY(-4px);
       box-shadow:0 16px 36px rgba(142,231,209,.14);
@@ -439,18 +438,30 @@
   <div class="eyebrow">Work</div>
   <h1>Featured projects</h1>
 
- <div class="card videoCard">
-  <video
-    muted
-    loop
-    playsinline
-    poster="Photos/caplugs-thumb.jpg"
-    class="previewVideo"
-  >
-    <source src="Caplug.mp4" type="video/mp4">
-  </video>
+  <div class="grid">
 
-  <strong>Caplugs Motion Graphics</strong>
+    <div class="card videoCard">
+      <video
+        muted
+        loop
+        playsinline
+        poster="Photos/caplugs-thumb.jpg"
+        class="previewVideo"
+      >
+        <source src="Caplug.mp4" type="video/mp4">
+      </video>
+
+      <strong>Caplugs Motion Graphics</strong>
+      <p>Motion graphics created during my internship at Caplugs.</p>
+    </div>
+
+    <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
+    <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
+    <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
+    <div class="card"><strong>Photography</strong><p>Color, mood, and composition.</p></div>
+
+  </div>
+</div>
   <p>Motion graphics created during my internship at Caplugs.</p>
 </div>
     <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
@@ -500,17 +511,6 @@
   });
 </script>
 
-  function show(n){
-    slides[i].classList.remove('is-active');
-    dots.children[i].classList.remove('is-active');
-    i = (n + slides.length) % slides.length;
-    slides[i].classList.add('is-active');
-    dots.children[i].classList.add('is-active');
-  }
-
-  document.getElementById('next').onclick = () => show(i + 1);
-  document.getElementById('prev').onclick = () => show(i - 1);
-</script>
 
 </body>
 </html>
