@@ -320,26 +320,13 @@
       margin-top:26px;
     }
     .card{
-  background:rgba(255,255,255,.90);
-  padding:18px;
-  border-radius:var(--radius);
-  border:1px solid rgba(142,231,209,.16);
-  box-shadow:0 10px 26px rgba(142,231,209,.08);
-  transition:transform .18s ease, box-shadow .18s ease;
-}
-
-.videoCard video{
-  width:100%;
-  border-radius:12px;
-  margin-bottom:10px;
-  object-fit:cover;
-  transition:transform .3s ease;
-}
-
-.videoCard:hover video{
-  transform:scale(1.03);
-}
-  
+      background:rgba(255,255,255,.90);
+      padding:18px;
+      border-radius:var(--radius);
+      border:1px solid rgba(142,231,209,.16);
+      box-shadow:0 10px 26px rgba(142,231,209,.08);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
     .card:hover{
       transform:translateY(-4px);
       box-shadow:0 16px 36px rgba(142,231,209,.14);
@@ -347,10 +334,23 @@
     .card strong{display:block;margin-bottom:6px}
     .card p{margin:0;color:var(--muted);font-size:14px}
 
+    .videoCard video{
+      width:100%;
+      border-radius:12px;
+      margin-bottom:10px;
+      object-fit:cover;
+      transition:transform .3s ease;
+      display:block;
+      background:#000;
+    }
+
+    .videoCard:hover video{
+      transform:scale(1.03);
+    }
+
     @media(max-width:860px){
       .quickRow{grid-template-columns:1fr}
     }
-
   </style>
 </head>
 
@@ -373,7 +373,6 @@
 
   <p class="sub">Video editing, photography, audio, and graphic design — bringing ideas to life through visuals.</p>
 
-  <!-- NEW BADGE -->
   <div class="statusRow">
     <div class="statusPill">
       <span class="pulseDot" aria-hidden="true"></span>
@@ -405,7 +404,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -439,12 +437,12 @@
   <h1>Featured projects</h1>
 
   <div class="grid">
-
     <div class="card videoCard">
       <video
         muted
         loop
         playsinline
+        preload="metadata"
         poster="Photos/caplugs-thumb.jpg"
         class="previewVideo"
       >
@@ -455,15 +453,6 @@
       <p>Motion graphics created during my internship at Caplugs.</p>
     </div>
 
-    <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
-    <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
-    <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
-    <div class="card"><strong>Photography</strong><p>Color, mood, and composition.</p></div>
-
-  </div>
-</div>
-  <p>Motion graphics created during my internship at Caplugs.</p>
-</div>
     <div class="card"><strong>Short-form Reels</strong><p>Fast pacing, transitions, captions.</p></div>
     <div class="card"><strong>YouTube Editing</strong><p>Structure, rhythm, retention flow.</p></div>
     <div class="card"><strong>Motion Graphics</strong><p>Titles, logos, animated elements.</p></div>
@@ -494,23 +483,24 @@
 
   document.getElementById('next').onclick = () => show(i + 1);
   document.getElementById('prev').onclick = () => show(i - 1);
-</script>
 
-<script>
   const vids = document.querySelectorAll('.previewVideo');
 
   vids.forEach(video => {
-    video.parentElement.addEventListener('mouseenter', () => {
-      video.play();
+    const card = video.closest('.videoCard');
+
+    if (!card) return;
+
+    card.addEventListener('mouseenter', () => {
+      video.play().catch(() => {});
     });
 
-    video.parentElement.addEventListener('mouseleave', () => {
+    card.addEventListener('mouseleave', () => {
       video.pause();
       video.currentTime = 0;
     });
   });
 </script>
-
 
 </body>
 </html>
